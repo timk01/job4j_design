@@ -19,7 +19,7 @@ class NameLoadTest {
     void mapIsNOTEmptyWhileGettingIt() {
         NameLoad nameLoad = new NameLoad();
         String firstName = "key=value";
-        String[] names = new String[] {firstName};
+        String[] names = new String[]{firstName};
         nameLoad.parse(names);
         Map<String, String> result = nameLoad.getMap();
         assertThat(result).isNotEmpty()
@@ -39,7 +39,7 @@ class NameLoadTest {
     void arrayDoNotContainSymbolWhenParse() {
         NameLoad nameLoad = new NameLoad();
         String firstName = "key value";
-        String[] names = new String[] {firstName};
+        String[] names = new String[]{firstName};
         assertThatThrownBy(() -> nameLoad.parse(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(firstName)
@@ -50,7 +50,7 @@ class NameLoadTest {
     void symbolIsAtBeginningWhenParse() {
         NameLoad nameLoad = new NameLoad();
         String firstName = "=key value";
-        String[] names = new String[] {firstName};
+        String[] names = new String[]{firstName};
         assertThatThrownBy(() -> nameLoad.parse(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(firstName)
@@ -61,7 +61,7 @@ class NameLoadTest {
     void symbolIsAtEndWhenParse() {
         NameLoad nameLoad = new NameLoad();
         String firstName = "key value=";
-        String[] names = new String[] {firstName};
+        String[] names = new String[]{firstName};
         assertThatThrownBy(() -> nameLoad.parse(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(firstName)
@@ -73,7 +73,7 @@ class NameLoadTest {
         NameLoad nameLoad = new NameLoad();
         String firstName = "key=value";
         String secondName = "key2=value2";
-        String[] names = new String[] {firstName, secondName};
+        String[] names = new String[]{firstName, secondName};
         nameLoad.parse(names);
         Map<String, String> result = nameLoad.getMap();
         assertThat(result).isNotEmpty()
@@ -85,9 +85,10 @@ class NameLoadTest {
         NameLoad nameLoad = new NameLoad();
         String firstName = "key=value";
         String secondName = "key=value2";
-        String[] names = new String[] {firstName, secondName};
+        String[] names = new String[]{firstName, secondName};
         nameLoad.parse(names);
         Map<String, String> result = nameLoad.getMap();
         assertThat(result).isNotEmpty()
-                .containsOnly(entry("key", "value+value2"));    }
+                .containsOnly(entry("key", "value+value2"));
+    }
 }
