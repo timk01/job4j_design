@@ -89,7 +89,5 @@ class NameLoadTest {
         nameLoad.parse(names);
         Map<String, String> result = nameLoad.getMap();
         assertThat(result).isNotEmpty()
-                .containsOnly(entry("key", "value+value2"));
-
-    }
+                .containsOnly(entry("key", "value+value2"));    }
 }
