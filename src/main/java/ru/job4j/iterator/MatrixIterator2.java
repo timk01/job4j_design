@@ -3,6 +3,10 @@ package ru.job4j.iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * this one from chatGPT
+ */
+
 public class MatrixIterator2 implements Iterator<Integer> {
     private int[][] array;
     private int row;
