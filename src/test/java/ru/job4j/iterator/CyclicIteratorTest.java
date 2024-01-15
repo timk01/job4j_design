@@ -83,5 +83,6 @@ class CyclicIteratorTest {
         assertThat(iterator.hasNext()).isTrue();
         assertThat(iterator.next()).isEqualTo(1);
         assertThat(iterator.hasNext()).isTrue();
+
     }
 }

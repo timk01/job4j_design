@@ -10,6 +10,7 @@ public class CyclicIterator<T> implements Iterator<T> {
      * see whenListContainsNullElements in test class
      * @param <T>
      */
+
     private List<T> data;
     private int index;
 
