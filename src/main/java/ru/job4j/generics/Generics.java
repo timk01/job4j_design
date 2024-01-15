@@ -22,7 +22,7 @@ public class Generics {
         /**
          * doesn't work since Animal is above of Predator in hierarchy
          * need to be below aof Predator or be his child
-        generics.printBoundedWildCard(first);
+         generics.printBoundedWildCard(first);
          */
 
         generics.printBoundedWildCard(second);
