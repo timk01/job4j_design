@@ -4,12 +4,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class NullableCyclicIterator<T> implements Iterator<T> {
+public class CyclicIterator<T> implements Iterator<T> {
 
+    /** data allows null elements (they are pefrectly valid),
+     * see whenListContainsNullElements in test class
+     * @param <T>
+     */
     private List<T> data;
     private int index;
 
-    public NullableCyclicIterator(List<T> data) {
+    public CyclicIterator(List<T> data) {
         this.data = data;
     }
 
