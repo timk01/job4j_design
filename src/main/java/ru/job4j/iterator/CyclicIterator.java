@@ -18,12 +18,17 @@ public class CyclicIterator<T> implements Iterator<T> {
         this.data = data;
     }
 
+    /**
+     * in fact, we return true only if array has any elements (and only false if it's empty)
+     * @return true/false see above when and why
+     */
+
     @Override
     public boolean hasNext() {
         if (index == data.size()) {
             index = 0;
         }
-        return !data.isEmpty() && index >= 0;
+        return !data.isEmpty();
     }
 
     @Override
