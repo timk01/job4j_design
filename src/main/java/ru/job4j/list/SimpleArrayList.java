@@ -14,29 +14,23 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     @Override
     public void add(T value) {
-        modCount++;
         increaseContainerSize();
-        container[size] = value;
-        size++;
+        container[size++] = value;
+        modCount++;
     }
 
-    private T[] increaseContainerSize() {
+    private void increaseContainerSize() {
         if (container.length == 0) {
             container = Arrays.copyOf(container, 1);
         }
         if (container.length == size) {
             container = Arrays.copyOf(container, container.length * 2);
         }
-        return container;
-    }
-
-    private void indexChecker(int index) {
-        Objects.checkIndex(index, size);
     }
 
     @Override
     public T set(int index, T newValue) {
-        indexChecker(index);
+        Objects.checkIndex(index, size);
         T oldValue = container[index];
         container[index] = newValue;
         return oldValue;
@@ -44,8 +38,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     @Override
     public T remove(int index) {
-        modCount++;
-        indexChecker(index);
+        Objects.checkIndex(index, size);
         T elem = container[index];
         System.arraycopy(
                 container,
@@ -56,12 +49,13 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         );
         container[container.length - 1] = null;
         size--;
+        modCount++;
         return elem;
     }
 
     @Override
     public T get(int index) {
-        indexChecker(index);
+        Objects.checkIndex(index, size);
         return container[index];
     }
 
@@ -74,11 +68,13 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             private int cursor;
-            private int expectedModCount = modCount;
+            private final int expectedModCount = modCount;
 
             @Override
             public boolean hasNext() {
-                checkModification();
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException("can't change array during iteration");
+                }
                 return cursor < size;
             }
 
@@ -88,12 +84,6 @@ public class SimpleArrayList<T> implements SimpleList<T> {
                     throw new NoSuchElementException("no elements anymore");
                 }
                 return container[cursor++];
-            }
-
-            private void checkModification() {
-                if (expectedModCount != modCount) {
-                    throw new ConcurrentModificationException("can't change array during iteration");
-                }
             }
         };
     }
