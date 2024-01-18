@@ -12,11 +12,11 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
 
     @Override
     public void add(E value) {
-        modCount++;
         Node<E> current = head;
         if (head == null) {
             head = new Node<>(value);
             size++;
+            modCount++;
             return;
         }
         while (current.next != null) {
@@ -24,10 +24,7 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
         }
         current.next = new Node<>(value);
         size++;
-    }
-
-    private void indexChecker(int index) {
-        Objects.checkIndex(index, size);
+        modCount++;
     }
 
     Node<E> findNodeByIndex(int index) {
@@ -40,7 +37,7 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
 
     @Override
     public E get(int index) {
-        indexChecker(index);
+        Objects.checkIndex(index, size);
         return findNodeByIndex(index).data;
     }
 
@@ -65,7 +62,9 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
 
         @Override
         public boolean hasNext() {
-            checkModification();
+            if (expectedModCount != modCount) {
+                throw new ConcurrentModificationException("can't change data structure during iteration");
+            }
             return current != null;
         }
 
@@ -77,12 +76,6 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
             E data = current.data;
             current = current.next;
             return data;
-        }
-
-        private void checkModification() {
-            if (expectedModCount != modCount) {
-                throw new ConcurrentModificationException("can't change data structure during iteration");
-            }
         }
     }
 }
