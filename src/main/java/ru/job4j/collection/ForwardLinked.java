@@ -1,7 +1,5 @@
 package ru.job4j.collection;
 
-import ru.job4j.generics.Node;
-
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -26,6 +24,16 @@ public class ForwardLinked<T> implements Iterable<T> {
         modCount++;
     }
 
+    public void addToStart(T value) {
+        Node<T> newNode = new Node<>(value);
+        if (head != null) {
+            newNode.next = head;
+        }
+        head = newNode;
+        size++;
+        modCount++;
+    }
+
     public T get(int index) {
         Objects.checkIndex(index, size);
         Node<T> lastNode = head;
@@ -36,7 +44,7 @@ public class ForwardLinked<T> implements Iterable<T> {
     }
 
     public T deleteFirst() {
-        if (head == null) {
+        if (size == 0) {
             throw new NoSuchElementException("list is empty");
         }
         T elem = head.data;
@@ -49,6 +57,33 @@ public class ForwardLinked<T> implements Iterable<T> {
         size--;
         modCount++;
         return elem;
+    }
+
+    public T deleteLast() {
+        if (size == 0) {
+            throw new NoSuchElementException("list is empty");
+        }
+        Node prevLast = head;
+        T elem = null;
+        if (head.next == null) {
+            elem = head.data;
+            head.data = null;
+        } else {
+            elem = (T) prevLast.next.data;
+            while (prevLast.next.next != null) {
+                elem = (T) prevLast.next.next.data;
+                prevLast = prevLast.next;
+            }
+            prevLast.next.data = null;
+            prevLast.next = null;
+        }
+        size--;
+        modCount++;
+        return elem;
+    }
+
+    public int getSize() {
+        return size;
     }
 
     private static class Node<T> {
