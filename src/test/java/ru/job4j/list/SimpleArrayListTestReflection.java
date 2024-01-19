@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class SimpleArrayListTestReflection {
+class SimpleArrayListReflection {
 
     private SimpleList<Integer> list;
 
