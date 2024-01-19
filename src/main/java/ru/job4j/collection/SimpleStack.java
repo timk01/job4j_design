@@ -9,7 +9,7 @@ public class SimpleStack<T> {
     }
 
     public void push(T value) {
-        linked.addToStart(value);
+        linked.addFirst(value);
     }
 
     public void addToEnd(T value) {
