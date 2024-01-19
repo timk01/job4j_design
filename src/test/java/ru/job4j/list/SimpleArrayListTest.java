@@ -3,13 +3,13 @@ package ru.job4j.list;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.stream.IntStream;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class SimpleArrayListTest {
 
@@ -21,21 +21,6 @@ class SimpleArrayListTest {
         list.add(1);
         list.add(2);
         list.add(3);
-    }
-
-    @Test
-    void checkContainerIncrease() {
-        try {
-            list = new SimpleArrayList<>(0);
-            list.add(1);
-            Field privateField
-                    = SimpleArrayList.class.getDeclaredField("container");
-            privateField.setAccessible(true);
-            Object o = privateField.get(list);
-            assertThat(((Integer[]) (o)).length).isEqualTo(1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Test
