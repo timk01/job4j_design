@@ -15,30 +15,24 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
         Node<E> current = head;
         if (head == null) {
             head = new Node<>(value);
-            size++;
-            modCount++;
-            return;
+        } else {
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = new Node<>(value);
         }
-        while (current.next != null) {
-            current = current.next;
-        }
-        current.next = new Node<>(value);
         size++;
         modCount++;
-    }
-
-    Node<E> findNodeByIndex(int index) {
-        Node<E> nodeByIndex = head;
-        for (int i = 0; i < index; i++) {
-            nodeByIndex = nodeByIndex.next;
-        }
-        return nodeByIndex;
     }
 
     @Override
     public E get(int index) {
         Objects.checkIndex(index, size);
-        return findNodeByIndex(index).data;
+        Node<E> lastNode = head;
+        for (int i = 0; i < index; i++) {
+            lastNode = lastNode.next;
+        }
+        return lastNode.data;
     }
 
     private static class Node<E> {
@@ -77,5 +71,11 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
             current = current.next;
             return data;
         }
+    }
+
+    public static void main(String[] args) {
+         SimpleLinked<Integer> list = new SimpleLinkedList<>();
+         list.add(1);
+         list.add(1);
     }
 }
