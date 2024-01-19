@@ -72,10 +72,4 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
             return data;
         }
     }
-
-    public static void main(String[] args) {
-         SimpleLinked<Integer> list = new SimpleLinkedList<>();
-         list.add(1);
-         list.add(1);
-    }
 }
