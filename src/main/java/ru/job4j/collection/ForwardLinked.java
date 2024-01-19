@@ -88,20 +88,4 @@ public class ForwardLinked<T> implements Iterable<T> {
             return data;
         }
     }
-
-    public static void main(String[] args) {
-        ForwardLinked<Integer> list = new ForwardLinked<>();
-        list.add(1);
-        list.add(2);
-        Iterator<Integer> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            System.out.println(iterator.next());
-        }
-        list.add(3);
-        Integer integer = list.deleteFirst();
-        System.out.println(integer);
-
-        System.out.println();
-        list.forEach(System.out::println);
-    }
 }
