@@ -11,12 +11,4 @@ public class SimpleStack<T> {
     public void push(T value) {
         linked.addFirst(value);
     }
-
-    public void addToEnd(T value) {
-        linked.add(value);
-    }
-
-    public T getLastElem() {
-        return linked.deleteLast();
-    }
 }
