@@ -20,7 +20,7 @@ public class RevertLinked<T> implements Iterable<T> {
     }
 
     public boolean revert() {
-        if (head == null  || head.next == null) {
+        if (head == null || head.next == null) {
             return false;
         }
         Node<T> current = head.next;
@@ -63,21 +63,6 @@ public class RevertLinked<T> implements Iterable<T> {
         public Node(T value, Node<T> next) {
             this.value = value;
             this.next = next;
-        }
-    }
-
-    public static void main(String[] args) {
-        RevertLinked<Integer> revertLinked = new RevertLinked<>();
-        revertLinked.add(1);
-        revertLinked.add(2);
-        for (Integer integer : revertLinked) {
-            System.out.println(integer);
-        }
-
-        System.out.println();
-        revertLinked.revert();
-        for (Integer integer : revertLinked) {
-            System.out.println(integer);
         }
     }
 }
