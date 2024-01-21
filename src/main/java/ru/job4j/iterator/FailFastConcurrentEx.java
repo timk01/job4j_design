@@ -44,7 +44,7 @@ public class FailFastConcurrentEx {
         }
          */
 
-        List<Integer> list3 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+        List<Integer> list3 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 9, 9, 10, 3, 3, 3));
         ListIterator<Integer> iterator3 = list3.listIterator();
         while (iterator3.hasNext()) {
             Integer value = iterator3.next();
