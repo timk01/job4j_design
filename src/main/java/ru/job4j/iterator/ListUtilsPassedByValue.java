@@ -1,11 +1,10 @@
 package ru.job4j.iterator;
 
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
-public class ListUtils {
+public class ListUtilsPassedByValue {
 
     public static <T> void addBefore(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
@@ -35,7 +34,23 @@ public class ListUtils {
         }
     }
 
+    /**
+     * see collents in TG from 22.01.24. Passed by value
+     * @param list
+     * @param elements
+     * @param <T>
+     */
+
     public static <T> void removeAll(List<T> list, List<T> elements) {
-        removeIf(list, elements::contains);
+        List<T> collect = list.stream().filter(element -> !elements.contains(element)).collect(Collectors.toList());
+        list.clear();
+        list.addAll(collect);
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Integer> integers2 = new ArrayList<>(Arrays.asList(1, 3, 3, 9, 5, 10, 12));
+        ArrayList<Integer> integers = new ArrayList<>(Arrays.asList(3, 5));
+        removeAll(integers2, integers);
+        System.out.println(integers2);
     }
 }
