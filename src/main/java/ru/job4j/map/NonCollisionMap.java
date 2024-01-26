@@ -17,12 +17,16 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
 
     private MapEntry<K, V>[] table = new MapEntry[capacity];
 
+    private int getIndex(K key) {
+        return indexFor(hash(Objects.hashCode(key)));
+    }
+
     @Override
     public boolean put(K key, V value) {
         if (count >= capacity * LOAD_FACTOR) {
             expand();
         }
-        int index = indexFor(hash(Objects.hashCode(key)));
+        int index = getIndex(key);
         boolean res = table[index] == null;
         if (res) {
             table[index] = new MapEntry<>(key, value);
@@ -45,7 +49,7 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
         MapEntry<K, V>[] newTable = new MapEntry[capacity];
         for (MapEntry<K, V> entry : table) {
             if (entry != null) {
-                newTable[indexFor(hash(Objects.hashCode(entry.key)))] =
+                newTable[getIndex(entry.key)] =
                         new MapEntry<>(entry.key, entry.value);
             }
         }
@@ -58,33 +62,36 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
         return hash1 == hash2;
     }
 
+    private boolean compareTwoObjects(MapEntry<K, V> currentEntry, K key) {
+        return Objects.equals(currentEntry.key, key);
+    }
+
     @Override
     public V get(K key) {
-        MapEntry<K, V> currentEntry = table[indexFor(hash(Objects.hashCode(key)))];
+        MapEntry<K, V> currentEntry = table[getIndex(key)];
         boolean res = currentEntry != null;
-        if (res) {
-            if (compareTwoHashes(key, currentEntry.key)
-                    && Objects.equals(currentEntry.key, key)) {
-                return currentEntry.value;
-            }
+        V result = null;
+        if (res
+                && compareTwoHashes(key, currentEntry.key)
+                && compareTwoObjects(currentEntry, key)) {
+            result = currentEntry.value;
         }
-        return null;
+        return result;
     }
 
     @Override
     public boolean remove(K key) {
-        int i = indexFor(hash(Objects.hashCode(key)));
+        int i = getIndex(key);
         MapEntry<K, V> currentEntry = table[i];
         boolean res = currentEntry != null;
         boolean isDeleted = false;
-        if (res) {
-            if (compareTwoHashes(key, currentEntry.key)
-                    && Objects.equals(currentEntry.key, key)) {
-                table[i] = null;
-                modCount++;
-                count--;
-                isDeleted = true;
-            }
+        if (res
+                && compareTwoHashes(key, currentEntry.key)
+                && compareTwoObjects(currentEntry, key)) {
+            table[i] = null;
+            modCount++;
+            count--;
+            isDeleted = true;
         }
         return isDeleted;
     }
