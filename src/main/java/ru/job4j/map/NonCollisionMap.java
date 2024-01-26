@@ -66,14 +66,17 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
         return Objects.equals(currentEntry.key, key);
     }
 
+    private boolean compareTwoKeys(MapEntry<K, V> currentEntry, K key) {
+        return compareTwoHashes(key, currentEntry.key)
+                && compareTwoObjects(currentEntry, key);
+    }
+
     @Override
     public V get(K key) {
         MapEntry<K, V> currentEntry = table[getIndex(key)];
         boolean res = currentEntry != null;
         V result = null;
-        if (res
-                && compareTwoHashes(key, currentEntry.key)
-                && compareTwoObjects(currentEntry, key)) {
+        if (res && compareTwoKeys(currentEntry, key)) {
             result = currentEntry.value;
         }
         return result;
@@ -85,9 +88,7 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
         MapEntry<K, V> currentEntry = table[i];
         boolean res = currentEntry != null;
         boolean isDeleted = false;
-        if (res
-                && compareTwoHashes(key, currentEntry.key)
-                && compareTwoObjects(currentEntry, key)) {
+        if (res && compareTwoKeys(currentEntry, key)) {
             table[i] = null;
             modCount++;
             count--;
