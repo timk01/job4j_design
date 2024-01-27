@@ -68,8 +68,7 @@ class AnalyzeTest {
         User u6 = new User(16, "qwe");
         User u7 = new User(17, "rty");
         Set previous = Set.of(u1, u2, u3, u6, u7);
-        Set current = Set.of
-                (
+        Set current = Set.of(
                         new User(1, "AA"),
                         new User(2, "BB"),
                         new User(3, "CC"),
@@ -87,8 +86,7 @@ class AnalyzeTest {
         User u4 = new User(14, "abc");
         User u5 = new User(15, "def");
         Set previous = Set.of(u1, u2, u3);
-        Set current = Set.of
-                (
+        Set current = Set.of(
                         new User(1, "AA"),
                         u2,
                         u3,
