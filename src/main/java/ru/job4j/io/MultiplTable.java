@@ -28,7 +28,7 @@ public class MultiplTable {
                                             e.printStackTrace();
                                         }
                                     }));
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
