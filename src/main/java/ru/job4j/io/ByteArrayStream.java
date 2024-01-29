@@ -2,6 +2,7 @@ package ru.job4j.io;
 
 import java.io.*;
 import java.nio.CharBuffer;
+import java.util.Arrays;
 
 public class ByteArrayStream {
 
@@ -34,13 +35,14 @@ public class ByteArrayStream {
             e.printStackTrace();
         }
 
-        StringBuilder stringBuilder = new StringBuilder();
+        System.out.println("wtf");
         char[] chars
                 = new char[]{'\u25B6', '\u65e5'};
-        try (CharArrayReader reader = new CharArrayReader(chars);
-             FileOutputStream fileOutput = new FileOutputStream("data/message2.txt")) {
-            fileOutput.write(reader.read());
-            System.out.println(stringBuilder);
+        String s = Arrays.toString(chars);
+        System.out.println("s " + s);
+        char[] buff = new char[256];
+        try (StringReader reader = new StringReader(s)) {
+             reader.read(buff);
         } catch (IOException e) {
             e.printStackTrace();
         }
