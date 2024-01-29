@@ -33,8 +33,7 @@ public class LogFilter {
                      new PrintWriter(
                              new BufferedOutputStream(
                                      new FileOutputStream(out)))) {
-            data.forEach(str ->
-                    printWriter.printf("%s%s", str, System.lineSeparator()));
+            data.forEach(printWriter::println);
         } catch (IOException e) {
             e.printStackTrace();
         }
