@@ -38,6 +38,7 @@ public class ByteArrayStream {
         System.out.println("wtf");
         char[] chars
                 = new char[]{'\u25B6', '\u65e5'};
+        System.out.println("\u0048\u0065\u006C\u006C");
         String s = Arrays.toString(chars);
         System.out.println("s " + s);
         char[] buff = new char[256];
