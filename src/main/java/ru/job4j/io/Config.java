@@ -17,7 +17,7 @@ public class Config {
     }
 
     private String[] checkSplit(String[] split) {
-        if (split.length != 2 || split[0].length() == 0 || split[1].length() == 0) {
+        if (split.length != 2 || split[0].isEmpty() || split[1].isEmpty()) {
             throw new IllegalArgumentException(
                     "must have '=', key/value part can't be empty");
         }
