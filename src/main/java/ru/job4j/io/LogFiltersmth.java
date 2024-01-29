@@ -1,16 +1,16 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
- *  List<String> stringList = buff.lines()
- *                     .map(str -> str.split(" "))
- *                     .filter(string -> string[string.length - 2].equals("404"))
- *                     .flatMap(Arrays::stream)
- *                     .toList();
+ * ??? StringJoiner, as idea to gather String from flatmap ?
+ * List<String> stringList = buff.lines()
+ * .map(str -> str.split(" "))
+ * .filter(string -> string[string.length - 2].equals("404"))
+ * .flatMap(Arrays::stream)
+ * .toList();
  */
 
 public class LogFiltersmth {
@@ -22,17 +22,14 @@ public class LogFiltersmth {
 
     public List<String> filter() {
         List<String> strings = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
         try (BufferedReader buff = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = buff.readLine()) != null) {
-                String[] splitStr = line.split(" ");
-                if (splitStr[splitStr.length - 2].equals("404")) {
-                    System.out.println("line: " + line);
-                    strings.add(sb.append(line).append(System.lineSeparator()).toString());
-                    sb.setLength(0);
-                }
-            }
+            strings = buff.lines()
+                    .filter(string -> {
+                        String[] splitStr = string.split(" ");
+                        return splitStr[splitStr.length - 2].equals("404");
+                    })
+                    .map(str -> str.concat(System.lineSeparator()))
+                    .toList();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,8 +42,7 @@ public class LogFiltersmth {
                      new PrintWriter(
                              new BufferedOutputStream(
                                      new FileOutputStream(out)))) {
-            data.forEach(str ->
-                    printWriter.printf("%s%s", str, System.lineSeparator()));
+            data.forEach(printWriter::print);
         } catch (IOException e) {
             e.printStackTrace();
         }
