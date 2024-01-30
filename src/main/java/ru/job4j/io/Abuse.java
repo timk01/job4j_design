@@ -11,11 +11,11 @@ public class Abuse {
     public static void drop(String source, String target, List<String> words) throws IOException {
         try (BufferedReader input = new BufferedReader(new FileReader(source));
              PrintWriter output = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)))) {
-            Stream<String> stringStream = input.lines()
-                    .flatMap(line -> Stream.of(line.split("\\s+")));
-                    /*.filter(word -> !words.contains(word))
+            input.lines()
+                    .flatMap(line -> Stream.of(line.split("\\s+")))
+                    .filter(word -> !words.contains(word))
                     .map(word -> word + " ")
-                    .forEach(output::print);*/
+                    .forEach(output::print);
         }
     }
 
