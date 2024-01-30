@@ -26,5 +26,6 @@ class AbuseTest {
             input.lines().forEach(result::append);
         }
         assertThat("hello dude java job4j ").hasToString(result.toString());
+
     }
 }

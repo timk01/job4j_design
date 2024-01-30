@@ -40,4 +40,5 @@ class AnalysisTest {
         assertThat(list).hasSize(1);
         assertThat(list.get(0)).isEqualTo("10:57:01;11:02:02");
     }
+
 }
