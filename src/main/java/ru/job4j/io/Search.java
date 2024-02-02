@@ -8,9 +8,22 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class Search {
+    private static void validateParams(String[] args) {
+        if (args.length == 0) {
+            System.out.println("No arguments provided");
+        }
+        if (args[0].startsWith("[.a-zA-Z0-9/]")) {
+            throw new IllegalArgumentException("Provided folder \"" + args[0] + "\" is wrong");
+        }
+        if (!(".txt".equals(args[1]) || ".js".equals(args[1]))) {
+            throw new IllegalArgumentException("Need to provide \".txt\" or \".js\" file extension.");
+        }
+    }
+
     public static void main(String[] args) throws IOException {
+        validateParams(args);
         Path start = Paths.get(".");
-        Predicate<Path> txtPredicate = path -> path.getFileName().toFile().toString().endsWith(".txt");
+        Predicate<Path> txtPredicate = path -> path.getFileName().toFile().toString().endsWith(args[1]);
         search(start, txtPredicate).forEach(System.out::println);
     }
 
