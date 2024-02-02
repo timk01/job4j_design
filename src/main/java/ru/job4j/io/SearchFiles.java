@@ -22,9 +22,6 @@ public class SearchFiles extends SimpleFileVisitor<Path> {
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
             throws IOException {
-        Objects.requireNonNull(file);
-        Objects.requireNonNull(attrs);
-
         if (condition.test(file)) {
             paths.add(file);
         }
