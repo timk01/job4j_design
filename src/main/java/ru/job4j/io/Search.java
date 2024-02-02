@@ -11,11 +11,7 @@ public class Search {
     public static void main(String[] args) throws IOException {
         Path start = Paths.get(".");
         Predicate<Path> txtPredicate = path -> path.getFileName().toFile().toString().endsWith(".txt");
-        search(start, txtPredicate);
-
-        SearchFiles searchFiles = new SearchFiles(txtPredicate);
-        searchFiles.visitFileBasic(start);
-        System.out.println(searchFiles.compareTwoWalkers());
+        search(start, txtPredicate).forEach(System.out::println);
     }
 
     public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
