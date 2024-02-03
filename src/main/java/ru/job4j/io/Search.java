@@ -1,5 +1,6 @@
 package ru.job4j.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,17 +13,23 @@ public class Search {
         if (args.length == 0) {
             System.out.println("No arguments provided");
         }
-        if (args[0].startsWith("[.a-zA-Z0-9/]")) {
-            throw new IllegalArgumentException("Provided folder \"" + args[0] + "\" is wrong");
+        Path path = Path.of(args[0]);
+        if (!Files.exists(path)) {
+            throw new IllegalArgumentException(String.format("Not exist %s",
+                    path.toFile().getAbsoluteFile()));
         }
-        if (!(".txt".equals(args[1]) || ".js".equals(args[1]))) {
-            throw new IllegalArgumentException("Need to provide \".txt\" or \".js\" file extension.");
+        if (!Files.isDirectory(path)) {
+            throw new IllegalArgumentException(String.format("Not directory %s",
+                    path.toFile().getAbsoluteFile()));
+        }
+        if (!args[1].matches("[.].+")) {
+            throw new IllegalArgumentException("Need to provide correct file extension.");
         }
     }
 
     public static void main(String[] args) throws IOException {
         validateParams(args);
-        Path start = Paths.get(".");
+        Path start = Paths.get(args[0]);
         Predicate<Path> txtPredicate = path -> path.getFileName().toFile().toString().endsWith(args[1]);
         search(start, txtPredicate).forEach(System.out::println);
     }
