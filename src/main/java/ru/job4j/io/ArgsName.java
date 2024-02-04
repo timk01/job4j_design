@@ -1,11 +1,14 @@
 package ru.job4j.io;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ArgsName {
 
     private final Map<String, String> values = new HashMap<>();
+    private int argsSplitCounter = 1;
 
     public String get(String key) {
         if (!values.containsKey(key)) {
@@ -28,10 +31,51 @@ public class ArgsName {
             throw new IllegalArgumentException(
                     String.format("Error: This argument '%s' does not contain a key", arg));
         }
-        if (arg.substring(arg.indexOf("=") + 1).isEmpty()) {
+        int i = arg.indexOf("=");
+        if (arg.substring(i + 1).isEmpty()) {
             throw new IllegalArgumentException(
                     String.format("Error: This argument '%s' does not contain a value",
                             arg));
+        }
+    }
+
+    private void checkFirstSplittedArg(String[] splitted, String firstArg) {
+        if (!splitted[0].startsWith(firstArg)) {
+            throw new IllegalArgumentException(
+                    String.format("Error: First argument should be '%s'",
+                            firstArg));
+        }
+    }
+
+    private void argumentsChecker(String[] splitted) {
+        String firstArg;
+        switch (argsSplitCounter) {
+            case 1 -> {
+                firstArg = "-d";
+                checkFirstSplittedArg(splitted, firstArg);
+                Path initDirectory = Path.of(splitted[1]);
+                if (!Files.exists(initDirectory) && !Files.isDirectory(initDirectory)) {
+                    throw new IllegalArgumentException(
+                            String.format("Error: File '%s' doesn't exist or file isn't directory",
+                                    initDirectory.toAbsolutePath()));
+                }
+            }
+            case 2 -> {
+                firstArg = "-e";
+                checkFirstSplittedArg(splitted, firstArg);
+                if (!splitted[1].matches("[.].+")) {
+                    throw new IllegalArgumentException("Need to provide correct file extension.");
+                }
+            }
+            case 3 -> {
+                firstArg = "-o";
+                checkFirstSplittedArg(splitted, firstArg);
+                if (!splitted[1].endsWith(".zip")) {
+                    throw new IllegalArgumentException("Need to provide correct file extension.");
+                }
+            }
+            default ->
+                throw new IllegalArgumentException("Wrong number of args");
         }
     }
 
@@ -39,6 +83,8 @@ public class ArgsName {
         for (String arg : args) {
             preliminaryArgChecker(arg);
             String[] splitted = arg.split("=", 2);
+            argumentsChecker(splitted);
+            argsSplitCounter++;
             for (int i = 0; i < splitted.length; i++) {
                 values.put(splitted[0].substring(1), splitted[1]);
             }
@@ -55,10 +101,9 @@ public class ArgsName {
     }
 
     public static void main(String[] args) {
-        ArgsName jvm = ArgsName.of(new String[]{"-Xmx=512", "-encoding=UTF-8"});
-        System.out.println(jvm.get("Xmx"));
-
-        ArgsName zip = ArgsName.of(new String[]{"-out=project.zip", "-encoding=UTF-8"});
-        System.out.println(zip.get("out"));
+        ArgsName threeParams = ArgsName.of(
+                new String[]{args[0], args[1], args[2]}
+        );
+        System.out.println(threeParams.get("d"));
     }
 }
