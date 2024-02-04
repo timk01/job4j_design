@@ -1,7 +1,6 @@
 package ru.job4j.io;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,7 +26,7 @@ public class Search {
         }
     }
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args) throws IOException {
         validateParams(args);
         Path start = Paths.get(args[0]);
         Predicate<Path> txtPredicate = path -> path.getFileName().toFile().toString().endsWith(args[1]);
