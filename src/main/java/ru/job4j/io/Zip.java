@@ -1,11 +1,9 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -15,6 +13,14 @@ import java.util.zip.ZipOutputStream;
 public class Zip {
 
     private List<String> firstCLIArgs = List.of("d", "e", "o");
+
+    private static void argsCountChecker(String[] args) {
+        if (args.length != 3) {
+            throw new IllegalArgumentException(
+                    String.format("Error: Have to pass exactly '%s' args!",
+                            args.length));
+        }
+    }
 
     private void checkFirstSplittedArg(Map<String, String> preparedArgs) {
         for (String firstCLIArg : firstCLIArgs) {
@@ -26,7 +32,7 @@ public class Zip {
         }
     }
 
-    private void argumentsZipChecker(ArgsName preparedArgs) {
+    private void argumentsZipDetailedChecker(ArgsName preparedArgs) {
         checkFirstSplittedArg(preparedArgs.getValues());
 
         int argCounter = -1;
@@ -49,21 +55,16 @@ public class Zip {
     }
 
     public void packFiles(List<Path> sources, File target) {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
-            sources.forEach(path -> {
-                try {
-                    zip.putNextEntry(new ZipEntry(path.toString()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try (BufferedInputStream output =
+        try (ZipOutputStream zip =
+                     new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
+            for (Path path : sources) {
+                zip.putNextEntry(new ZipEntry(path.toString()));
+                try (BufferedInputStream bufferedInputStream =
                              new BufferedInputStream(new FileInputStream(path.toFile()))) {
-                    zip.write(output.readAllBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
+                        zip.write(bufferedInputStream.readAllBytes());
                 }
-            });
-        } catch (IOException e) {
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -71,11 +72,12 @@ public class Zip {
     public static void main(String[] args) throws IOException {
         Zip zip = new Zip();
 
+        argsCountChecker(args);
         ArgsName threeParams = ArgsName.of(
                 new String[]{args[0], args[1], args[2]}
         );
 
-        zip.argumentsZipChecker(threeParams);
+        zip.argumentsZipDetailedChecker(threeParams);
 
         String searchPath = threeParams.get("d");
         String excludeExtension = threeParams.get("e");
