@@ -13,27 +13,6 @@ public class CSVReader {
     private static final String FILE_EXTENSION = ".csv";
     private static String stdout = "stdout";
     private static String delimeter;
-    private static List<String> result = new ArrayList<>();
-    private static StringBuilder stringBuilder = new StringBuilder();
-
-    private static void fillIndexes(String[] filteredArgsArr, String[] splitFirstStr, int[] indexes) {
-        int j = 0;
-        for (String value : filteredArgsArr) {
-            for (int i = 0; i < splitFirstStr.length; i++) {
-                if (value.equals(splitFirstStr[i])) {
-                    stringBuilder.append(splitFirstStr[i]);
-                    if (j != indexes.length - 1) {
-                        stringBuilder.append(delimeter);
-                    }
-                    indexes[j++] = i;
-                    if (j >= filteredArgsArr.length) {
-                        stringBuilder.append(System.lineSeparator());
-                        break;
-                    }
-                }
-            }
-        }
-    }
 
     public static void handle(ArgsName argsName) {
         argumentsDetailedChecker(argsName);
@@ -46,36 +25,47 @@ public class CSVReader {
                      new PrintWriter(
                              new FileWriter(argsName.get("out"), Charset.forName("WINDOWS-1251")), false)) {
 
-            String filteredArgs = argsName.get(firstCLIArgs.get(argsCounter - 1));
-            String[] filteredArgsArr = filteredArgs.split(",");
-
-            String[] splitFirstStr = new String[argsCounter];
+            Map<String, Integer> firstStrMap = new HashMap<>();
+            String[] splitFirstStr;
             if (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                splitFirstStr = line.split(delimeter);
+                splitFirstStr = scanner.nextLine().split(delimeter);
+                for (int i = 0; i < splitFirstStr.length; i++) {
+                    firstStrMap.put(splitFirstStr[i], i);
+                }
             }
 
-            int[] indexes = new int[filteredArgsArr.length];
+            String[] filteredArgsArr = argsName.get(firstCLIArgs.get(argsCounter - 1)).split(",");
+            StringBuilder stringBuilder = new StringBuilder();
 
-            fillIndexes(filteredArgsArr, splitFirstStr, indexes);
+            for (int i = 0; i < filteredArgsArr.length; i++) {
+                stringBuilder.append(filteredArgsArr[i]);
+                if (i != filteredArgsArr.length - 1) {
+                    stringBuilder.append(delimeter);
+                }
+                if (i == filteredArgsArr.length - 1) {
+                    stringBuilder.append(System.lineSeparator());
+                    break;
+                }
+            }
 
             while (scanner.hasNextLine()) {
                 String s = scanner.nextLine();
                 String[] splitStr = s.split(delimeter);
-                for (int i = 0; i < indexes.length; i++) {
-                    stringBuilder.append(splitStr[indexes[i]]);
-                    if (i < indexes.length - 1) {
+                for (int i = 0; i < filteredArgsArr.length; i++) {
+                    stringBuilder.append(splitStr[firstStrMap.get(filteredArgsArr[i])]);
+                    if (i != filteredArgsArr.length - 1) {
                         stringBuilder.append(delimeter);
                     }
                 }
                 stringBuilder.append(System.lineSeparator());
             }
-            result.add(stringBuilder.toString());
 
             if (stdout.equals(argsName.get(firstCLIArgs.get(2)))) {
-                result.forEach(System.out::println);
+                System.out.print(stringBuilder);
+                Path file = Path.of(argsName.get("out"));
+                file.toFile().deleteOnExit();
             } else {
-                result.forEach(writer::write);
+                writer.print(stringBuilder);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -145,12 +135,9 @@ public class CSVReader {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         argsCountChecker(args);
 
-        ArgsName concreteArgs = ArgsName.of(args);
-        System.out.println(concreteArgs.hashCode());
-
-        handle(concreteArgs);
+        handle(ArgsName.of(args));
     }
 }

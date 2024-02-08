@@ -7,9 +7,9 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class CSVReaderTest {
+public class CSVReaderTest {
 
     @Test
     void whenFilterTwoColumns(@TempDir Path folder) throws Exception {
@@ -35,8 +35,6 @@ class CSVReaderTest {
         ).concat(System.lineSeparator());
         CSVReader.handle(argsName);
         assertThat(Files.readString(target.toPath())).isEqualTo(expected);
-        file.deleteOnExit();
-        target.deleteOnExit();
     }
 
     @Test
