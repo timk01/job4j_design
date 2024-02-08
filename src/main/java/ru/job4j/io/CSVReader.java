@@ -14,59 +14,11 @@ public class CSVReader {
     private static String stdout = "stdout";
     private static String delimeter;
 
-    public static void handle(ArgsName argsName) {
-        argumentsDetailedChecker(argsName);
-
-        try (Scanner scanner =
-                     new Scanner(
-                             new FileInputStream(
-                                     argsName.get("path")));
-             PrintWriter writer =
+    private static void writeDataToFile(ArgsName argsName, StringBuilder stringBuilder) {
+        try (PrintWriter writer =
                      new PrintWriter(
-                             new FileWriter(argsName.get("out"), Charset.forName("WINDOWS-1251")), false)) {
-
-            Map<String, Integer> firstStrMap = new HashMap<>();
-            String[] splitFirstStr;
-            if (scanner.hasNextLine()) {
-                splitFirstStr = scanner.nextLine().split(delimeter);
-                for (int i = 0; i < splitFirstStr.length; i++) {
-                    firstStrMap.put(splitFirstStr[i], i);
-                }
-            }
-
-            String[] filteredArgsArr = argsName.get(firstCLIArgs.get(argsCounter - 1)).split(",");
-            StringBuilder stringBuilder = new StringBuilder();
-
-            for (int i = 0; i < filteredArgsArr.length; i++) {
-                stringBuilder.append(filteredArgsArr[i]);
-                if (i != filteredArgsArr.length - 1) {
-                    stringBuilder.append(delimeter);
-                }
-                if (i == filteredArgsArr.length - 1) {
-                    stringBuilder.append(System.lineSeparator());
-                    break;
-                }
-            }
-
-            while (scanner.hasNextLine()) {
-                String s = scanner.nextLine();
-                String[] splitStr = s.split(delimeter);
-                for (int i = 0; i < filteredArgsArr.length; i++) {
-                    stringBuilder.append(splitStr[firstStrMap.get(filteredArgsArr[i])]);
-                    if (i != filteredArgsArr.length - 1) {
-                        stringBuilder.append(delimeter);
-                    }
-                }
-                stringBuilder.append(System.lineSeparator());
-            }
-
-            if (stdout.equals(argsName.get(firstCLIArgs.get(2)))) {
-                System.out.print(stringBuilder);
-                Path file = Path.of(argsName.get("out"));
-                file.toFile().deleteOnExit();
-            } else {
-                writer.print(stringBuilder);
-            }
+                             new FileWriter(argsName.get("out"), Charset.forName("WINDOWS-1251")), true)) {
+            writer.print(stringBuilder);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -132,6 +84,61 @@ public class CSVReader {
         if (secondSplitArg.toString().length() < 1) {
             throw new IllegalArgumentException(
                     "Error: arguments must conform the ones in table");
+        }
+    }
+
+    public static void handle(ArgsName argsName) {
+        argumentsDetailedChecker(argsName);
+
+        try (Scanner scanner =
+                     new Scanner(
+                             new FileInputStream(
+                                     argsName.get("path")))) {
+
+            Map<String, Integer> firstStrMap = new HashMap<>();
+            String[] splitFirstStr;
+            if (scanner.hasNextLine()) {
+                splitFirstStr = scanner.nextLine().split(delimeter);
+                for (int i = 0; i < splitFirstStr.length; i++) {
+                    firstStrMap.put(splitFirstStr[i], i);
+                }
+            }
+
+            String[] filteredArgsArr = argsName.get(firstCLIArgs.get(argsCounter - 1)).split(",");
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (int i = 0; i < filteredArgsArr.length; i++) {
+                stringBuilder.append(filteredArgsArr[i]);
+                if (i != filteredArgsArr.length - 1) {
+                    stringBuilder.append(delimeter);
+                }
+                if (i == filteredArgsArr.length - 1) {
+                    stringBuilder.append(System.lineSeparator());
+                    break;
+                }
+            }
+
+            while (scanner.hasNextLine()) {
+                String s = scanner.nextLine();
+                String[] splitStr = s.split(delimeter);
+                for (int i = 0; i < filteredArgsArr.length; i++) {
+                    stringBuilder.append(splitStr[firstStrMap.get(filteredArgsArr[i])]);
+                    if (i != filteredArgsArr.length - 1) {
+                        stringBuilder.append(delimeter);
+                    }
+                }
+                stringBuilder.append(System.lineSeparator());
+            }
+
+            if (stdout.equals(argsName.get(firstCLIArgs.get(2)))) {
+                System.out.print(stringBuilder);
+                Path file = Path.of(argsName.get("out"));
+                file.toFile().deleteOnExit();
+            } else {
+                writeDataToFile(argsName, stringBuilder);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

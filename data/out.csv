@@ -1,3 +1,4 @@
-age;last_name20;Smith;
-25;Johnson;
-30;Brown;
+education,age,last_name
+Bachelor,20,Smith
+Undergraduate,25,Johnson
+Secondary special,30,Brown
