@@ -8,6 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class EchoServer {
+
     public static void main(String[] args) throws IOException {
         try (ServerSocket server = new ServerSocket(9000)) {
             while (!server.isClosed()) {
@@ -15,18 +16,22 @@ public class EchoServer {
                 try (OutputStream output = socket.getOutputStream();
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
-                    StringBuilder sb = new StringBuilder();
+                    String message = null;
                     for (String str = in.readLine(); str != null && !str.isEmpty(); str = in.readLine()) {
                         System.out.println(str);
-                        sb.append(str + System.lineSeparator());
+                        if (str.contains("HTTP")) {
+                            message = str.split(" ")[1].substring("/?msg=".length());
+                        }
                     }
                     output.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
-                    output.flush();
-                    if (sb.toString().contains("/?msg=Bye")) {
-                        output.write("See you".getBytes());
-                        output.flush();
+                    if ("Hello".equals(message)) {
+                        output.write("Hello".getBytes());
+                    } else if ("Exit".equals(message)) {
                         server.close();
+                    } else {
+                        output.write(message.getBytes());
                     }
+                    output.flush();
                 }
             }
         }
