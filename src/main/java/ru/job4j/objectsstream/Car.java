@@ -1,11 +1,10 @@
 package ru.job4j.objectsstream;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 public class Car implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 12L;
 
     private String brand;
 
@@ -13,10 +12,16 @@ public class Car implements Serializable {
 
     private int year;
 
+    private int randomInt;
+
     public Car(String brand, String model, int year) {
         this.brand = brand;
         this.model = model;
         this.year = year;
+    }
+
+    public void setRandomInt(int randomInt) {
+        this.randomInt = randomInt;
     }
 
     @Override
