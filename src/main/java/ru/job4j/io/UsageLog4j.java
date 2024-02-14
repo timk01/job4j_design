@@ -34,14 +34,27 @@ public class UsageLog4j {
     private static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
 
     public static void main(String[] args) {
-        try {
-            throw new Exception("Not supported code");
-        } catch (Exception e) {
-            LOG.trace("Trace Message!");
-            LOG.debug("Debug Message!");
-            LOG.info("Info Message!");
-            LOG.warn("Warn Message!");
-            LOG.error("Error Message!");
-        }
+        String name = "Timur K.";
+        int age = 38;
+        char sex = 'M';
+        boolean jobless = true;
+        boolean single = true;
+        float tasksAvg = 2.19F;
+        byte daysStudy = (byte) 182;
+        long tries = 100_500_000_000_000L;
+        double successTaskRate = 0.356789;
+        short maxShortToRemember = Short.MAX_VALUE;
+        LOG.debug("User info name: {}, age: {}, sex: {}, jobless: {}, single: {}",
+                name,
+                age,
+                sex,
+                jobless,
+                single);
+        LOG.debug("tasksAvg: {}, daysStudy: {}, tries: {}, successTaskRate: {}, maxShortToRemember: {}",
+                tasksAvg,
+                daysStudy,
+                tries,
+                successTaskRate,
+                maxShortToRemember);
     }
 }
