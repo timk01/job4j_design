@@ -1,0 +1,21 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<!-- represents java object
+ final Prisoner prisoner = new Prisoner(
+                false,
+                12348898789L,
+                "Ivanov Ivan Ivanovich",
+                new Crime(
+                        "arson",
+                        15,
+                        true
+                ),
+                new float[]{167.2F, 109F}
+        );
+-->
+<prisoner sex="false" prisonerNumber="12348898789L" credentials="Ivanov Ivan Ivanovich">
+    <crime definition="arson" duration="15" conditionalRelease="true"/>
+    <articleNumber>
+        <article>167.2F</article>
+        <article>109F</article>
+    </articleNumber>
+</prisoner>
