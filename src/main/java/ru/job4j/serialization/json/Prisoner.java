@@ -36,6 +36,26 @@ public class Prisoner {
         this.articleNumber = articleNumber;
     }
 
+    public boolean getSex() {
+        return sex;
+    }
+
+    public long getPrisonerNumber() {
+        return prisonerNumber;
+    }
+
+    public String getCredentials() {
+        return credentials;
+    }
+
+    public Crime getCrime() {
+        return crime;
+    }
+
+    public float[] getArticleNumber() {
+        return articleNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

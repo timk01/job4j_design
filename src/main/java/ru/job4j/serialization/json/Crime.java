@@ -22,6 +22,18 @@ public class Crime {
         this.conditionalRelease = conditionalRelease;
     }
 
+    public String getDefinition() {
+        return definition;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public boolean isConditionalRelease() {
+        return conditionalRelease;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
