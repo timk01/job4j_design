@@ -1,1 +1,116 @@
 2024-02-14 14:12:35,334 ERROR ru.job4j.io.UsageLog4j:main:44 - Error Message!
+2024-02-15 21:19:33,941 ERROR ru.job4j.io.UsageLog4j:main:49 - Error was encountered while creating the JAXBContext in PrisonerJAXB
+com.sun.xml.bind.v2.runtime.IllegalAnnotationsException: 3 counts of IllegalAnnotationExceptions
+ru.job4j.serialization.json.Prisoner does not have a no-arg default constructor.
+	this problem is related to the following location:
+		at ru.job4j.serialization.json.Prisoner
+XmlElementWrapper annotation is not allowed on this kind of property.
+	this problem is related to the following location:
+		at @javax.xml.bind.annotation.XmlElementWrapper(name="articles", namespace="##default", required=false, nillable=false)
+		at private float[] ru.job4j.serialization.json.Prisoner.articleNumber
+		at ru.job4j.serialization.json.Prisoner
+ru.job4j.serialization.json.Crime does not have a no-arg default constructor.
+	this problem is related to the following location:
+		at ru.job4j.serialization.json.Crime
+
+	at com.sun.xml.bind.v2.runtime.IllegalAnnotationsException$Builder.check(IllegalAnnotationsException.java:106)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.getTypeInfoSet(JAXBContextImpl.java:471)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:303)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:139)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl$JAXBContextBuilder.build(JAXBContextImpl.java:1156)
+	at com.sun.xml.bind.v2.ContextFactory.createContext(ContextFactory.java:165)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at javax.xml.bind.ContextFinder.newInstance(ContextFinder.java:297)
+	at javax.xml.bind.ContextFinder.newInstance(ContextFinder.java:286)
+	at javax.xml.bind.ContextFinder.find(ContextFinder.java:409)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:721)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:662)
+	at ru.job4j.serialization.json.PrisonerJAXB.main(PrisonerJAXB.java:34)
+2024-02-15 21:20:23,464 ERROR ru.job4j.io.UsageLog4j:main:49 - Error was encountered while creating the JAXBContext in PrisonerJAXB
+com.sun.xml.bind.v2.runtime.IllegalAnnotationsException: 1 counts of IllegalAnnotationExceptions
+XmlElementWrapper annotation is not allowed on this kind of property.
+	this problem is related to the following location:
+		at @javax.xml.bind.annotation.XmlElementWrapper(name="articles", namespace="##default", required=false, nillable=false)
+		at private float[] ru.job4j.serialization.json.Prisoner.articleNumber
+		at ru.job4j.serialization.json.Prisoner
+
+	at com.sun.xml.bind.v2.runtime.IllegalAnnotationsException$Builder.check(IllegalAnnotationsException.java:106)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.getTypeInfoSet(JAXBContextImpl.java:471)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:303)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:139)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl$JAXBContextBuilder.build(JAXBContextImpl.java:1156)
+	at com.sun.xml.bind.v2.ContextFactory.createContext(ContextFactory.java:165)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at javax.xml.bind.ContextFinder.newInstance(ContextFinder.java:297)
+	at javax.xml.bind.ContextFinder.newInstance(ContextFinder.java:286)
+	at javax.xml.bind.ContextFinder.find(ContextFinder.java:409)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:721)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:662)
+	at ru.job4j.serialization.json.PrisonerJAXB.main(PrisonerJAXB.java:34)
+2024-02-15 21:21:00,817 ERROR ru.job4j.io.UsageLog4j:main:49 - Error was encountered while creating the JAXBContext in PrisonerJAXB
+com.sun.xml.bind.v2.runtime.IllegalAnnotationsException: 1 counts of IllegalAnnotationExceptions
+XmlElementWrapper annotation is not allowed on this kind of property.
+	this problem is related to the following location:
+		at @javax.xml.bind.annotation.XmlElementWrapper(name="articles", namespace="##default", required=false, nillable=false)
+		at private float[] ru.job4j.serialization.json.Prisoner.articleNumber
+		at ru.job4j.serialization.json.Prisoner
+
+	at com.sun.xml.bind.v2.runtime.IllegalAnnotationsException$Builder.check(IllegalAnnotationsException.java:106)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.getTypeInfoSet(JAXBContextImpl.java:471)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:303)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:139)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl$JAXBContextBuilder.build(JAXBContextImpl.java:1156)
+	at com.sun.xml.bind.v2.ContextFactory.createContext(ContextFactory.java:165)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at javax.xml.bind.ContextFinder.newInstance(ContextFinder.java:297)
+	at javax.xml.bind.ContextFinder.newInstance(ContextFinder.java:286)
+	at javax.xml.bind.ContextFinder.find(ContextFinder.java:409)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:721)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:662)
+	at ru.job4j.serialization.json.PrisonerJAXB.main(PrisonerJAXB.java:34)
+2024-02-15 21:24:51,926 ERROR ru.job4j.io.UsageLog4j:main:50 - Error was encountered while creating the JAXBContext in PrisonerJAXB
+com.sun.xml.bind.v2.runtime.IllegalAnnotationsException: 1 counts of IllegalAnnotationExceptions
+XmlElementWrapper annotation is not allowed on this kind of property.
+	this problem is related to the following location:
+		at @javax.xml.bind.annotation.XmlElementWrapper(name="articles", namespace="##default", required=false, nillable=false)
+		at private float[] ru.job4j.serialization.json.Prisoner.articleNumber
+		at ru.job4j.serialization.json.Prisoner
+
+	at com.sun.xml.bind.v2.runtime.IllegalAnnotationsException$Builder.check(IllegalAnnotationsException.java:106)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.getTypeInfoSet(JAXBContextImpl.java:471)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:303)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:139)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl$JAXBContextBuilder.build(JAXBContextImpl.java:1156)
+	at com.sun.xml.bind.v2.ContextFactory.createContext(ContextFactory.java:165)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at javax.xml.bind.ContextFinder.newInstance(ContextFinder.java:297)
+	at javax.xml.bind.ContextFinder.newInstance(ContextFinder.java:286)
+	at javax.xml.bind.ContextFinder.find(ContextFinder.java:409)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:721)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:662)
+	at ru.job4j.serialization.json.PrisonerJAXB.main(PrisonerJAXB.java:34)
+2024-02-15 21:27:43,445 ERROR ru.job4j.io.UsageLog4j:main:50 - Error was encountered while creating the JAXBContext in PrisonerJAXB
+com.sun.xml.bind.v2.runtime.IllegalAnnotationsException: 1 counts of IllegalAnnotationExceptions
+@XmlAttribute/@XmlValue need to reference a Java type that maps to text in XML.
+	this problem is related to the following location:
+		at private ru.job4j.serialization.json.Crime ru.job4j.serialization.json.Prisoner.crime
+		at ru.job4j.serialization.json.Prisoner
+
+	at com.sun.xml.bind.v2.runtime.IllegalAnnotationsException$Builder.check(IllegalAnnotationsException.java:106)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.getTypeInfoSet(JAXBContextImpl.java:471)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:303)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:139)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl$JAXBContextBuilder.build(JAXBContextImpl.java:1156)
+	at com.sun.xml.bind.v2.ContextFactory.createContext(ContextFactory.java:165)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at javax.xml.bind.ContextFinder.newInstance(ContextFinder.java:297)
+	at javax.xml.bind.ContextFinder.newInstance(ContextFinder.java:286)
+	at javax.xml.bind.ContextFinder.find(ContextFinder.java:409)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:721)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:662)
+	at ru.job4j.serialization.json.PrisonerJAXB.main(PrisonerJAXB.java:34)

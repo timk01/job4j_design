@@ -1,15 +1,32 @@
 package ru.job4j.serialization.json;
 
+import javax.xml.bind.annotation.*;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class Prisoner {
+
+    @XmlAttribute
     private boolean sex;
+
+    @XmlAttribute
     private long prisonerNumber;
+
+    @XmlAttribute
     private String credentials;
+
+    @XmlElement
     private Crime crime;
+
+    @XmlElementWrapper(name = "articles")
+    @XmlElement(name = "article")
     private float[] articleNumber;
+
+    public Prisoner() {
+    }
 
     public Prisoner(boolean sex, long prisonerNumber, String credentials, Crime crime, float[] articleNumber) {
         this.sex = sex;

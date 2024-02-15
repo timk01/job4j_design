@@ -1,12 +1,20 @@
 package ru.job4j.serialization.json;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Crime {
     private String definition;
     private int duration;
     private boolean conditionalRelease;
+
+    public Crime() {
+    }
 
     public Crime(String definition, int duration, boolean conditionalRelease) {
         this.definition = definition;
