@@ -1,4 +1,4 @@
-package ru.job4j.io.oracle;
+package ru.job4j.io.socket.oracle;
 
 import java.io.BufferedReader;
 import java.io.IOException;
