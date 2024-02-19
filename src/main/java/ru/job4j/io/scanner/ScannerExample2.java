@@ -1,4 +1,4 @@
-package ru.scanner;
+package ru.job4j.io.scanner;
 
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;

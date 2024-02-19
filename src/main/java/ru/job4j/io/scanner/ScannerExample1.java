@@ -1,4 +1,4 @@
-package ru.scanner;
+package ru.job4j.io.scanner;
 
 import java.io.CharArrayReader;
 import java.util.Scanner;

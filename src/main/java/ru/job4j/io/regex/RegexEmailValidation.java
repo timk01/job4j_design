@@ -1,4 +1,4 @@
-package ru.regex;
+package ru.job4j.io.regex;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
