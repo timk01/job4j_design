@@ -1,0 +1,18 @@
+INSERT INTO fauna (name, avg_age, discovery_date)
+VALUES ('Lion', 10, '2020-05-15'),
+       ('Elephant', 25, '2018-08-23'),
+       ('Tiger', 8, '2019-02-10'),
+       ('Crocodile', 30, '2017-11-30'),
+       ('Panda', 15, '2021-03-05'),
+       ('Koala', 12, '2016-09-12'),
+       ('Cheetah', 7, '2022-01-20'),
+       ('Gorilla', 40, NULL),
+       ('Penguin', 5, '2023-04-17'),
+       ('Cobra', 20, NULL),
+       ('Giraffe', 15, '2013-06-28'),
+       ('Flamingo', 8, NULL),
+       ('Eagle', 25, '2010-04-14'),
+       ('Rat', 3, '2024-07-22'),
+       ('Goldfish', 9999, '2000-12-01'),
+       ('Whale Shark', 21001, '1920-08-07'),
+       ('Angelfish', 10000, '1945-03-15');
