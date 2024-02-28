@@ -16,3 +16,15 @@ VALUES ('Lion', 10, '2020-05-15'),
        ('Goldfish', 9999, '2000-12-01'),
        ('Whale Shark', 21001, '1920-08-07'),
        ('Angelfish', 10000, '1945-03-15');
+
+INSERT INTO scientists (name, second_name, speciality, birthday, fauna_id)
+VALUES ('John', 'Smith', 'Zoologist', '1980-05-12', 1),
+       ('Anna', 'Johnson', 'Marine Biologist', '1975-08-23', 2),
+       ('Robert', 'Williams', 'Herpetologist', '1985-02-10', 4),
+       ('Emma', 'Miller', 'Wildlife Biologist', '1972-11-30', 3),
+       ('David', 'Jones', 'Ornithologist', '1988-03-05', 1),
+       ('Sophie', 'Anderson', 'Zoologist', '1983-09-15', 2),
+       ('Michael', 'Brown', 'Herpetologist', '1978-12-20', 4),
+       ('Olivia', 'Davis', 'Marine Biologist', '1982-06-08', 1),
+       ('Daniel', 'Taylor', 'Ornithologist', '1970-04-14', 12),
+       ('Emily', 'Wilson', 'Wildlife Biologist', '1990-07-22', 3);
