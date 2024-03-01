@@ -37,38 +37,39 @@ from employees as e
 
 -- Используя cross join составить все возможные разнополые пары.
 -- Исключите дублирование пар вида Вася-Маша и Маша-Вася.
-select distinct
-        case when t.name<=t2.name then t.name else t2.name end as "first name",
-        case when t.name<=t2.name then t2.name else t.name end "second name"
-from teens t
-cross join teens t2;
 
--- alternative one
+-- alternative one with union
 select t1.name as "first name",
        t2.name as "second name"
 from teens t1
          join teens t2 on t1.name <= t2.name
+where t1.gender != t2.gender
 union
 select t1.name as "first name",
        t2.name as "second name"
 from teens t1
-         join teens t2 on t1.name < t2.name;
+         join teens t2 on t1.name < t2.name
+where t1.gender != t2.gender;
 
--- alternative one№2
+select distinct
+    case when t.name<=t2.name then t.name else t2.name end as "first name",
+    case when t.name<=t2.name then t2.name  else t.name end as "second name"
+from teens t
+         cross join teens t2
+where t.gender != t2.gender;
+
+-- with where only
 select t1.name as "first name",
        t2.name as "second name"
 from teens t1
          cross join teens t2
-where t1.name != t2.name and t1.name < t2.name;
+where t1.name != t2.name and t1.gender != t2.gender and t1.name < t2.name;
 /*
- Emma,Liam
-Emma,Olivia
+Ava,Liam
+Ava,Noah
+Emma,Liam
 Emma,Noah
 Liam,Olivia
-Liam,Noah
 Noah,Olivia
-Ava,Emma
-Ava,Liam
-Ava,Olivia
-Ava,Noah
+(all 3 cases)
  */
