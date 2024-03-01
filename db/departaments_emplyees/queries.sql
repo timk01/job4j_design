@@ -42,3 +42,33 @@ select distinct
         case when t.name<=t2.name then t2.name else t.name end "second name"
 from teens t
 cross join teens t2;
+
+-- alternative one
+select t1.name as "first name",
+       t2.name as "second name"
+from teens t1
+         join teens t2 on t1.name <= t2.name
+union
+select t1.name as "first name",
+       t2.name as "second name"
+from teens t1
+         join teens t2 on t1.name < t2.name;
+
+-- alternative one№2
+select t1.name as "first name",
+       t2.name as "second name"
+from teens t1
+         cross join teens t2
+where t1.name != t2.name and t1.name < t2.name;
+/*
+ Emma,Liam
+Emma,Olivia
+Emma,Noah
+Liam,Olivia
+Liam,Noah
+Noah,Olivia
+Ava,Emma
+Ava,Liam
+Ava,Olivia
+Ava,Noah
+ */
