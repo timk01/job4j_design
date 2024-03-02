@@ -63,7 +63,7 @@ select t1.name as "first name",
        t2.name as "second name"
 from teens t1
          cross join teens t2
-where t1.gender != t2.gender and t1.name < t2.name;
+where t1.gender < t2.gender;
 /*
 Ava,Liam
 Ava,Noah
