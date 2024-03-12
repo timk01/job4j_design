@@ -42,10 +42,10 @@ public class TableEditor implements AutoCloseable {
         try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
             properties.load(in);
         }
-        Class.forName(properties.getProperty("driver"));
-        String url = properties.getProperty("url");
-        String login = properties.getProperty("login");
-        String password = properties.getProperty("password");
+        Class.forName(properties.getProperty("driver_TableEditor"));
+        String url = properties.getProperty("url_TableEditor");
+        String login = properties.getProperty("login_TableEditor");
+        String password = properties.getProperty("password_TableEditor");
         return DriverManager.getConnection(url, login, password);
     }
 
@@ -53,26 +53,26 @@ public class TableEditor implements AutoCloseable {
         connection = getConnection();
     }
 
+    private void executePreparedStatement(String prepStatement) {
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(prepStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void createTable(String tableName) {
         String createTable = String.format(
                 "create table if not exists %s();",
                 tableName);
-        try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(createTable);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        executePreparedStatement(createTable);
     }
 
     public void dropTable(String tableName) {
         String dropTable = String.format(
                 "drop table if exists %s;",
                 tableName);
-        try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(dropTable);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        executePreparedStatement(dropTable);
     }
 
     public void addColumn(String tableName, String columnName, String type) {
@@ -82,11 +82,7 @@ public class TableEditor implements AutoCloseable {
                 tableName,
                 columnName,
                 type);
-        try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(addColumn);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        executePreparedStatement(addColumn);
     }
 
     public void dropColumn(String tableName, String columnName) {
@@ -95,11 +91,7 @@ public class TableEditor implements AutoCloseable {
                         + "DROP COLUMN IF EXISTS %s;",
                 tableName,
                 columnName);
-        try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(dropColumn);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        executePreparedStatement(dropColumn);
     }
 
     public void renameColumn(String tableName, String columnName, String newColumnName) {
@@ -109,11 +101,7 @@ public class TableEditor implements AutoCloseable {
                 tableName,
                 columnName,
                 newColumnName);
-        try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(dropColumn);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        executePreparedStatement(dropColumn);
     }
 
     @Override
