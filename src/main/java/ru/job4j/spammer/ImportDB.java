@@ -16,10 +16,33 @@ public class ImportDB {
 
     private Properties config;
     private String dump;
+    private Connection connection;
 
-    public ImportDB(Properties config, String dump) {
-        this.config = config;
+    public ImportDB(String dump) {
+        initConnection();
         this.dump = dump;
+    }
+
+    public void initConnection() {
+        config = new Properties();
+        try (InputStream input = ImportDB.class.getClassLoader().getResourceAsStream("importDB.properties")) {
+            config.load(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            Class.forName(config.getProperty("jdbc.driver"));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            connection = DriverManager.getConnection(
+                    config.getProperty("jdbc.url"),
+                    config.getProperty("jdbc.username"),
+                    config.getProperty("jdbc.password"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private String[] checkSplit(String[] split) {
@@ -42,20 +65,14 @@ public class ImportDB {
     }
 
     public void save(List<User> users) throws ClassNotFoundException, SQLException {
-        Class.forName(config.getProperty("jdbc.driver"));
-        try (Connection connection = DriverManager.getConnection(
-                config.getProperty("jdbc.url"),
-                config.getProperty("jdbc.username"),
-                config.getProperty("jdbc.password")
-        )) {
-            for (User user : users) {
-                try (PreparedStatement preparedStatement =
-                             connection
-                                     .prepareStatement("INSERT INTO users(name, email) values(?, ?)")) {
-                    preparedStatement.setString(1, user.name);
-                    preparedStatement.setString(2, user.email);
-                    preparedStatement.execute();
-                }
+
+        for (User user : users) {
+            try (PreparedStatement preparedStatement =
+                         connection
+                                 .prepareStatement("INSERT INTO users(name, email) values(?, ?)")) {
+                preparedStatement.setString(1, user.name);
+                preparedStatement.setString(2, user.email);
+                preparedStatement.execute();
             }
         }
     }
@@ -71,11 +88,7 @@ public class ImportDB {
     }
 
     public static void main(String[] args) throws Exception {
-        Properties config = new Properties();
-        try (InputStream input = ImportDB.class.getClassLoader().getResourceAsStream("app.properties")) {
-            config.load(input);
-        }
-        ImportDB dataBase = new ImportDB(config, "./data/dump.txt");
+        ImportDB dataBase = new ImportDB("./data/dump.txt");
         dataBase.save(dataBase.load());
     }
 }
