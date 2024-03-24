@@ -10,6 +10,19 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * создали сервер, пока не закрыт:
+ * server.accept() - слушаем
+ * output.write("HTTP/1.1 200 OK\r\n\r\n".getBytes()); - пишем ответочку, что все ОК (Клиенту)
+ * = socket.getOutputStream();
+ * output - это то, что ШЛЕМ ОБРАТНО уже МЫ
+ * = new BufferedReader(new InputStreamReader(socket.getInputStream());
+ * in - то, что мы читаем (что шлют НАМ)
+ * <p> </p>
+ * остальная логика не так важна, ервер работает до тех пор пока не закроем сами (красная кнопка) /
+ * или введем кодовое слово
+ */
+
 public class EchoServer {
     private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
 
