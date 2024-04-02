@@ -1,4 +1,4 @@
-package ru.job4j.jdbc.sql_trainer;
+package ru.job4j.jdbc.sqltrainer;
 
 import java.util.Objects;
 
