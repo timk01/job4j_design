@@ -14,8 +14,6 @@ public class ProductManager {
         products.put(product2, 15);
         products.put(product3, 20);
 
-/*        System.out.println(products.get(new Product("Apple", 1.99)));
-        System.out.println(products.get(product1));*/
         for (Product product : products.keySet()) {
             System.out.println("Товар: " + product.getName() + ", количество: " + products.get(product));
         }

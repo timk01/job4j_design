@@ -27,7 +27,7 @@ public class Product {
         this.price = price;
     }
 
-/*    @Override
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -37,7 +37,7 @@ public class Product {
         }
         Product product = (Product) o;
         return Double.compare(product.price, price) == 0 && Objects.equals(name, product.name);
-    }*/
+    }
 
     @Override
     public int hashCode() {
