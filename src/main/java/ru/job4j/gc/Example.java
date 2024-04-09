@@ -1,4 +1,4 @@
-package ru.job4j.memory;
+package ru.job4j.gc;
 
 import java.util.StringJoiner;
 

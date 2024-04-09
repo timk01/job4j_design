@@ -1,0 +1,158 @@
+1. BubbleSort
+static void bubbleSort(int[] arr) {
+        int n = arr.length;
+        int temp = 0;
+         for(int i=0; i < n; i++){
+                 for(int j=1; j < (n-i); j++){
+                          if(arr[j-1] > arr[j]){
+                                 //swap elements
+                                 temp = arr[j-1];
+                                 arr[j-1] = arr[j];
+                                 arr[j] = temp;
+                         }
+
+                 }
+         }
+
+simple as it is, we begin from 1 element, so outer loop traverses through all array
+the internal loop begins from second one element and is shrinked, but not only by the arr length, but also by
+the external i (since the biggest element is supposed to 'bubble up' after each iteration)
+Keep note on: arr[j-1] (or simply can do i < n - 1 & j < (n - i - 1))
+so THE PREVIOUS element is taken (the previous, in fact, is first elem)
+
+int out, in;
+        for (out = array.length - 1; out >= 1; out--) {
+            for (in = 0; in < out; in++) {
+                if (array[in] > array[in + 1]) {
+                    swap(array, in, in + 1);
+                }
+            }
+        }
+
+here we use last elem as n - i - 1 (hence, in < out in internal loop)
+
+2. InsertSort
+public static void insertionSortImperative(int[] input) {
+    for (int i = 1; i < input.length; i++) {
+        int key = input[i];
+        int j = i - 1;
+        while (j >= 0 && input[j] > key) {
+            input[j + 1] = input[j];
+            j = j - 1;
+        }
+        input[j + 1] = key;
+    }
+}
+
+In whole process we divide whole arr on two parts: sorted (or so-called sorted) and comparable.
+Sorted part is increasing, while we pick the next element from unsorted part and compare it
+with whole sorted part, one by one.
+Since in 'sorted' part we can have only 2 outputs:
+or it's really sortted compared with new element
+or it's not sorted and we need to swap positions, until the sorted array will be sorted completely
+
+This way, say, we begin from second element; it will grow in process (external array)
+Also, we remember this element as KEY
+(or the element with that we will compare previous elements in 'sorted' arr)
+AND we remember the index of previous element;
+once internal loop is started, inside we compare:
+a)if index is still not-negative &&
+if the element before is still bigger than this key (the element after)
+- and that's important SINCE if it's not
+(and we presume array before is 'sorted' we don't need to check it anymore)
+
+if it is, inside loop we do:
+a) put on next element the previous posiion;
+b) reduce internal index.
+
+So, if we have AT LEAST one internal loop iteration, afterwards we will need swap. Again.
+Say, we have only 1 such swap and after loop is over (say, B is not valid anymore)
+and since we put input[j + 1] = input[j]; i.e. on next elementt put previous
+we need to put on previous element next (or KEY)
+
+int in, out;
+        for (out = 1; out < array.length; out++) {
+            int temp = array[out];
+            in = out;
+            while (in > 0 && array[in - 1] >= temp) {
+                array[in] = array[in - 1];
+                --in;
+            }
+            array[in] = temp;
+        }
+
+Here the same process. We start from 2 element, remember it's value as temp variable and index;
+while in > 0 AND prev > temp (prev > next in a sence), we do the loop:
+put on next pos prev and reduce in...
+after we exit from internal loop (and that means we actually have now SORTED array),
+we need to complete swap process.
+
+3. MergeSort
+ private int[] sort(int[] array, int from, int to) {
+        if (from == to) {
+            return new int[]{array[from]};
+        }
+        int mid = (from + to) / 2;
+        return merge(
+                sort(array, from, mid),
+                sort(array, mid + 1, to)
+        );
+    }
+
+    private int[] merge(int[] left, int[] right) {
+        int li = 0;
+        int ri = 0;
+        int resI = 0;
+        int[] result = new int[left.length + right.length];
+        while (resI != result.length) {
+            if (li == left.length) {
+                result[resI++] = right[ri++];
+            } else if (ri == right.length) {
+                result[resI++] = left[li++];
+            } else if (left[li] <= right[ri]) {
+                result[resI++] = left[li++];
+            } else {
+                result[resI++] = right[ri++];
+            }
+        }
+        return result;
+    }
+
+First we split array, say, 10, 2, 3, 7, -1, 20 on equal parts: 10, 2, 3 and 7, -1, 20
+next, we do merge(
+            sort(10, 2, 3 ...)
+            sort(7, -1, 20 ...)
+            );
+Inside the sort method we have condition or stop-pointer (or recursion BASE)
+if (from == to) - so once we have only ONE element, no point to split it further.
+
+This way, {10, 2, 3} first is splitted to {10, 2} and {3}
+
+Next we sort, and hence split it to {10} and {2}
+once we have 1 element, it returns it as array, so in a sence,
+merge(sort(10), sort(2)) is the same as merge ({10}, {2})
+- see the sigrnature merge(int[] left, int[] right)
+
+Time to merge it! li, ri, resI - just indexes.
+Once we put something (see later) on position, we increase resI AND one of indexes, li or ri
+and continue till we fill array (array's length is sum or 2 lengths - left and right)
+left[li] <= right[ri] condition is core of logic.
+we actually put on 0 index the proper element, next we put on 1 index next element etc.
+finally here we got {2, 10} array - and it's sorted!
+So we have merge({2, 10}, {3}), which we merge again...
+
+After fully sort first part we have:
+merge(
+            {2, 3, 10}
+            sort(7, -1, 20 ...)
+            );
+And since 1 part is actually sorted (remember: for merge we need 2 arrays, left and right)
+we do the same with second one:
+
+merge(
+         {2, 3, 10}
+         {-1, 7, 20)
+         );
+
+This, we finally can merge ttogether, returning an array of {-1. 2. 3. 7, 10, 20};
+
