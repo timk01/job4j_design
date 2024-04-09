@@ -1,0 +1,27 @@
+[0.009s][info][gc] Using Serial
+[12.130s][info][gc] GC(0) Pause Young (Allocation Failure) 4M->2M(15M) 4.863ms
+[12.250s][info][gc] GC(1) Pause Young (Allocation Failure) 6M->2M(15M) 3.016ms
+[12.334s][info][gc] GC(2) Pause Young (Allocation Failure) 7M->4M(15M) 3.832ms
+[12.554s][info][gc] GC(3) Pause Young (Allocation Failure) 8M->4M(15M) 2.348ms
+[12.893s][info][gc] GC(4) Pause Young (Allocation Failure) 8M->5M(15M) 4.084ms
+[30.050s][info][gc] GC(5) Pause Young (Allocation Failure) 9M->5M(15M) 2.432ms
+[54.719s][info][gc] GC(6) Pause Young (Allocation Failure) 9M->5M(15M) 1.202ms
+[54.725s][info][gc] GC(7) Pause Young (Allocation Failure) 10M->5M(15M) 0.606ms
+[54.730s][info][gc] GC(8) Pause Young (Allocation Failure) 10M->5M(15M) 0.481ms
+[54.737s][info][gc] GC(9) Pause Young (Allocation Failure) 10M->5M(15M) 0.531ms
+[54.742s][info][gc] GC(10) Pause Young (Allocation Failure) 10M->5M(15M) 0.505ms
+[54.748s][info][gc] GC(11) Pause Young (Allocation Failure) 9M->5M(15M) 0.710ms
+[54.753s][info][gc] GC(12) Pause Young (Allocation Failure) 10M->5M(15M) 0.620ms
+[54.757s][info][gc] GC(13) Pause Young (Allocation Failure) 9M->5M(15M) 0.709ms
+[54.761s][info][gc] GC(14) Pause Young (Allocation Failure) 10M->5M(15M) 0.554ms
+[88.156s][info][gc] GC(15) Pause Young (Allocation Failure) 10M->5M(15M) 0.768ms
+[115.334s][info][gc] GC(16) Pause Young (Allocation Failure) 10M->5M(15M) 0.706ms
+[115.338s][info][gc] GC(17) Pause Young (Allocation Failure) 10M->5M(15M) 0.504ms
+[115.341s][info][gc] GC(18) Pause Young (Allocation Failure) 10M->5M(15M) 0.584ms
+[115.344s][info][gc] GC(19) Pause Young (Allocation Failure) 10M->5M(15M) 0.511ms
+[115.347s][info][gc] GC(20) Pause Young (Allocation Failure) 9M->5M(15M) 0.593ms
+[115.350s][info][gc] GC(21) Pause Young (Allocation Failure) 10M->5M(15M) 0.693ms
+[115.353s][info][gc] GC(22) Pause Young (Allocation Failure) 10M->5M(15M) 0.450ms
+[115.355s][info][gc] GC(23) Pause Young (Allocation Failure) 10M->5M(15M) 0.420ms
+[115.358s][info][gc] GC(24) Pause Young (Allocation Failure) 10M->5M(15M) 0.343ms
+[148.216s][info][gc] GC(25) Pause Young (Allocation Failure) 10M->5M(15M) 0.582ms
