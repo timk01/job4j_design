@@ -45,11 +45,17 @@ public abstract class AbstractCache<K, V> {
 
     public final V get(K key) {
         V value = null;
-        if (!cache.containsKey(key) || cache.get(key).get() == null) {
+        if (cache.containsKey(key)) {
+            value = cache.get(key).get();
+            if (value == null) {
+                value = load(key);
+                this.put(key, value);
+            }
+        } else {
             value = load(key);
             this.put(key, value);
         }
-        return cache.get(key).get();
+        return value;
     }
 
     protected abstract V load(K key);
