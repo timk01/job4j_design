@@ -1,0 +1,57 @@
+оригинальная идея - повторить паттерн фабрика, потому что Эмулятор с Абстрактным кешем - это скорее уже нектсЛевел
+(абы что, функцию производителя выполняет метод get(), а неспредственно щагружается инфа в кеш если ее нет уже в load())
+
+итак. есть завод. в нем есть пиво. допустим, алкогольное. может отпускаться совершеннолетним и имеет определенную
+процедуру изготовления (хмель например, верно ? мои познания на этом ... все) и реализации.
+есть власс, BeerFactoryOriginal в котором я произвожу тысячу бутылок пива (алкогольного) и транспортирую.
+BeerFacttoryOriginal - не более чем движок, есть BeerAlcohol c конструктором и доставкой.
+
+Чтобы кода не пложить, вот:
+public class BeerFacttoryOriginal {
+    public static void main(String[] args) {
+        AlcoholBeer alcoholBeer = new AlcoholBeer(
+                "Statriy melnik",
+                List.of("Water", "Barley Malt", "Hops"),
+                70.0
+        );
+        Deliver deliver = new Deliver();
+        deliver.deliverBeer(alcoholBeer);
+    }
+}
+
+class AlcoholBeer {
+    private String type;
+    private List<String> ingredientds;
+    private double price;
+
+    public AlcoholBeer(String type, List<String> ingredientds, double price) {
+        this.type = type;
+        this.ingredientds = ingredientds;
+        this.price = price;
+    }
+
+    public void deliveryToShops() {
+        System.out.println("alcohol beer is delivered;");
+    }
+}
+
+class Deliver {
+    private String companyName;
+
+    public void deliverBeer(AlcoholBeer thisBeer) {
+        System.out.println("alcohol beer is delivered;");
+        thisBeer.deliveryToShops();
+    }
+}
+
+Теперь. Поступил запрос рынка делать безакогольное пиво (технология, кмк, +- такая же, чуть другие интрегиенты, другая
+целевая аудитория, но те же магазины как покупатели).
+Вместо того чтобы делать еще 1 класс со своим методом доставки и дублировать код, а главное создавать пиво
+в прямом эфире в мейне, луше отдать на откуп классу, скажем, абстрактному создателю.
+Чтобы в нем был функционал. Итого, у нас есть интерфейс Pivo с методом деливери (как дсоатвлять пиво), его наследуют
+оба класса АлкогольноеПиво и АлкогольноеПиво
+Плюс есть еще и Пивной Завод, который будет это пиво производить, с реализацией как производить отданной классам
+АлкогольноеПиво и АлкогольноеПиво (но производят не они, а Пивной завод).
+Итого, я создаю 10 случайных бутылок пенного и доставляю их покупателям
+(без доставки было бы еще проще, без интерфейса, но так ближе к реальности).
+
