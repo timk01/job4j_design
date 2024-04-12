@@ -48,10 +48,51 @@ public class Emulator {
         }
     }
 
+    private static String setCacheDirectory(Scanner scanner) {
+        System.out.println("Сперва нужно набрать путь к директории: ");
+        String path = scanner.nextLine();
+        System.out.printf("%s%s%s%n", "Вы выбрали: \"", path, "\"");
+        return path;
+    }
+
+    private static void showDirectoryContent() {
+        boolean isEmpty = files.isEmpty();
+        System.out.println(!isEmpty ? "Файлы в директории:" : "Директория пуста!");
+        if (!isEmpty) {
+            files.forEach(System.out::println);
+        }
+    }
+
+    private static void getFileContent(Scanner scanner, AbstractCache<String, String> cache, boolean showFileContent) {
+        String file;
+        String content = null;
+
+        if (cache == null || files.isEmpty()) {
+            System.out.println("Сначала нужно указать путь до непустой директории с файлами!");
+            return;
+        }
+
+        System.out.printf("%s%n", "Нужно ввести название файла: ");
+        file = scanner.nextLine();
+        System.out.printf("%s%s%s%n", "Вы выбрали: \"", file, "\"");
+
+        if (files.contains(file)) {
+            content = cache.get(file);
+            if (showFileContent) {
+                System.out.println("Файл загружен в кеш");
+            } else {
+                System.out.println("Контент кэша:");
+                System.out.println(content);
+            }
+        } else {
+            System.out.println("Нет такого файла!");
+        }
+    }
+
     public static void start(Scanner scanner) throws IOException {
         boolean run = true;
         String path = null;
-        String file = null;
+        boolean showFileContent = false;
         AbstractCache<String, String> cache = null;
         while (run) {
             System.out.println(MENU);
@@ -59,47 +100,14 @@ public class Emulator {
             int userChoice = Integer.parseInt(scanner.nextLine());
             System.out.printf("%s%s%n", "Вы выбрали: ", userChoice);
             if (SET_CASH_DIRECTORY == userChoice) {
-                System.out.printf("%s%n", "Сперва нужно набрать путь к директории: ");
-                path = scanner.nextLine();
-                System.out.printf("%s%s%s%n", "Вы выбрали: \"", path, "\"");
+                path = setCacheDirectory(scanner);
                 cache = new DirFileCache(path);
                 files = listFilesUsingFileWalk(path, 1);
-                if (!files.isEmpty()) {
-                    System.out.println("Файлы в директории:");
-                    files.forEach(System.out::println);
-                } else {
-                    System.out.println("Директория пуста!");
-                }
+                showDirectoryContent();
             } else if (LOAD_FILE_TO_CASH == userChoice) {
-                if (cache != null) {
-                    System.out.printf("%s%n", "Нужно ввести название файла: ");
-                    file = scanner.nextLine();
-                    System.out.printf("%s%s%s%n", "Вы выбрали: \"", file, "\"");
-                    if (files.contains(file)) {
-                        cache.get(file);
-                        System.out.println("Файл загружен в кеш");
-                    } else {
-                        System.out.println("Нет такого файла!");
-                    }
-                } else {
-                    System.out.println("Нужно сперва указать путь до директории!");
-                }
+                getFileContent(scanner, cache, !showFileContent);
             } else if (SHOW_FILE_CONTENT == userChoice) {
-                if (cache != null) {
-                    System.out.printf("%s%n", "Нужно ввести название файла: ");
-                    file = scanner.nextLine();
-                    System.out.printf("%s%s%s%n", "Вы выбрали: \"", file, "\"");
-                    if (files.contains(file)) {
-                        String s = cache.get(file);
-                        System.out.println("Контент кэша:");
-                        System.out.println(s);
-                    } else {
-                        System.out.println("Нет такого файла!");
-                    }
-
-                } else {
-                    System.out.println("Нужно сперва указать путь до директории!");
-                }
+                getFileContent(scanner, cache, showFileContent);
             } else {
                 run = false;
                 System.out.println(EXIT);

@@ -22,7 +22,13 @@ public abstract class AbstractCache<K, V> {
      * Значит, и в кеш такой файлик уже подгружен.
      * Тогда мы просто его получим как Строгн-референс
      * <p> </p>
-     * 2. Его там (в кеше) нет, т.е. он не подгружен.
+     * 2. Его там (в кеше) нет, т.е. он не подгружен ИЛИ ЖЕ
+     * кеш содержит ключ, НО референс уже затерт
+     * <p> </p>
+     * Для 2 частного варианта мотри метод get() с получением ссылки на объект из слебой ссылки:
+     * Returns this reference object's referent.
+     * If this reference object has been cleared, either by the program or by the garbage collector,
+     * then this method returns null.
      * <p> </p>
      * "Если в кэше файла нет, кэш должен загрузить себе данные"
      * - получение происходит по имени файла и сперва нужно его загрузить
@@ -38,14 +44,12 @@ public abstract class AbstractCache<K, V> {
      */
 
     public final V get(K key) {
-        V value;
-        if (cache.containsKey(key)) {
-            value = cache.get(key).get();
-        } else {
+        V value = null;
+        if (!cache.containsKey(key) || cache.get(key).get() == null) {
             value = load(key);
             this.put(key, value);
         }
-        return value;
+        return cache.get(key).get();
     }
 
     protected abstract V load(K key);
