@@ -1,7 +1,9 @@
-package ru.algos.codewars.eigth_kyu.arraynumbinversion;
+package ru.algos.codewars.eigthkyu.arraynumbinversion;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.algos.codewars.eigth_kyu.arraynumbinversion.Kata;
 
 import java.util.Arrays;
 
@@ -10,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Tests")
 class KataTests {
     private void runTest(int[] expected, int[] input) {
-        assertArrayEquals(expected, Kata.invert(input), () -> String.format("Input: %s", Arrays.toString(input)));
+        Assertions.assertArrayEquals(expected, Kata.invert(input), () -> String.format("Input: %s", Arrays.toString(input)));
     }
 
     @Test

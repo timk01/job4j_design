@@ -18,7 +18,10 @@ public class Cinema3D implements Cinema {
             throw new IllegalArgumentException("date cannot be null");
         }
         Calendar dateNow = Calendar.getInstance();
-        dateNow.add(Calendar.DAY_OF_MONTH, -1);
+        dateNow.set(Calendar.HOUR_OF_DAY, 0);
+        dateNow.set(Calendar.MINUTE, 0);
+        dateNow.set(Calendar.SECOND, 0);
+        dateNow.set(Calendar.MILLISECOND, 0);
         if (dateNow.compareTo(date) > 0) {
             throw new IllegalArgumentException("date cannot be in past");
         }
