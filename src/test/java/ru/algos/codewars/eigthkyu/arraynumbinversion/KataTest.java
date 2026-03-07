@@ -3,11 +3,8 @@ package ru.algos.codewars.eigthkyu.arraynumbinversion;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.algos.codewars.eigth_kyu.arraynumbinversion.Kata;
 
 import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Tests")
 class KataTests {

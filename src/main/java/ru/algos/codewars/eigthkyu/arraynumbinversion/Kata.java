@@ -1,7 +1,4 @@
-package ru.algos.codewars.eigth_kyu.arraynumbinversion;
-
-import java.util.Arrays;
-import java.util.stream.Stream;
+package ru.algos.codewars.eigthkyu.arraynumbinversion;
 
 /**
  * Не нужны проверки типа
@@ -12,12 +9,6 @@ import java.util.stream.Stream;
  */
 public class Kata {
   public static int[] invert(int[] array) {
-
-/*    return Arrays.stream(array)
-            .map(i -> -i)
-            .toArray();
-    */
-
     for (int i = 0; i < array.length; i++) {
       array[i] = -array[i];
     }
