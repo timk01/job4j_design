@@ -8,7 +8,11 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class MemoryStore implements Store {
+
     private final List<Employee> employees = new ArrayList<>();
+
+    public MemoryStore() {
+    }
 
     @Override
     public void add(Employee employee) {
