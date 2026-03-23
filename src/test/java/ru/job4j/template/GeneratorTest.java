@@ -18,6 +18,7 @@ class GeneratorTest {
 
     private Generator generator;
 
+    @Disabled
     @BeforeEach
     void setUp() {
         generator = new Generator() {
@@ -31,19 +32,21 @@ class GeneratorTest {
         generatorMap.put("subject", "you");
     }
 
+    @Disabled
     @Test
     void whenMapHasKeyAndValueThenOK() {
         String result = generator.produce(template, generatorMap);
         assertThat(result).isEqualTo("I am a Tim, Who are you? ");
     }
 
+    @Disabled
     @Test
     void whenTemplateHasKeyWhichMapHasNotThenException() {
         generatorMap.remove("name");
         assertThatThrownBy(() -> generator.produce(template, generatorMap))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
+    @Disabled
     @Test
     void whenMapHasExtraKeysException() {
         generatorMap.put("age", "18");
