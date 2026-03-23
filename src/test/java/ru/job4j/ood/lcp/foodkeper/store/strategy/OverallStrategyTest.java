@@ -25,22 +25,22 @@ class OverallStrategyTest {
                 "white bread",
                 50.0,
                 0,
-                toCalendar(getReferenceDate().minusDays(10)),
-                toCalendar(getReferenceDate().plusDays(30))
+                toCalendar(getReferenceDate().minusDays(40)),
+                toCalendar(getReferenceDate().plusDays(60))
         );
         Food food2 = new Bread(
                 "brown bread",
                 50.0,
                 0,
-                toCalendar(getReferenceDate().minusDays(20)),
+                toCalendar(getReferenceDate().minusDays(110)),
                 toCalendar(getReferenceDate().minusDays(10))
         );
         Food food3 = new Bread(
                 "black bread",
                 50.0,
                 0,
-                toCalendar(getReferenceDate().minusDays(40)),
-                toCalendar(getReferenceDate().plusDays(1))
+                toCalendar(getReferenceDate().minusDays(80)),
+                toCalendar(getReferenceDate().plusDays(20))
         );
 
         return Stream.of(
