@@ -13,7 +13,7 @@ public class CarParking implements Parking {
 
     public CarParking(int freeCarPlaces, int freeTruckPlaces) {
         if (freeCarPlaces < 0 || freeTruckPlaces < 0) {
-            throw new IllegalStateException("parking cannot be empty!");
+            throw new IllegalStateException("freeCarPlaces or freeTruckPlaces cannot be negative!");
         }
         this.freeCarPlaces = freeCarPlaces;
         this.freeTruckPlaces = freeTruckPlaces;
@@ -101,12 +101,12 @@ public class CarParking implements Parking {
         return new Result(false);
     }
 
-    private boolean doSimpleUnparking(Car car, List<ParkingPlace> truckParkingLine) {
-        for (ParkingPlace truckparkingPlace : truckParkingLine) {
-            if (!truckparkingPlace.isFree()
-                    && truckparkingPlace.getCar().getCarId() == car.getCarId()) {
-                truckparkingPlace.setFree(true);
-                truckparkingPlace.setCar(null);
+    private boolean doSimpleUnparking(Car car, List<ParkingPlace> parkingLine) {
+        for (ParkingPlace parkingPlace : parkingLine) {
+            if (!parkingPlace.isFree()
+                    && parkingPlace.getCar().getCarId() == car.getCarId()) {
+                parkingPlace.setFree(true);
+                parkingPlace.setCar(null);
                 return true;
             }
         }
