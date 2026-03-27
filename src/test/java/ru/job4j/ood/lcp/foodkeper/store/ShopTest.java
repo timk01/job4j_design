@@ -24,7 +24,7 @@ class ShopTest {
 
     @BeforeAll
     static void prepareDiscounter() {
-        shopDiscounter = new ShopDiscounter();
+        shopDiscounter = new ShopDiscounter(new ShopDataProvider());
     }
 
     @Test

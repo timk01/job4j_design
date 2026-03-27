@@ -68,4 +68,9 @@ public abstract class AbstractStore implements Store {
         }
         return foundFood;
     }
+
+    @Override
+    public void clean() {
+        foodList.clear();
+    }
 }

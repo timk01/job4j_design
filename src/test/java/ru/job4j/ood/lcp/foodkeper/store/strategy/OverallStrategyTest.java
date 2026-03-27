@@ -5,6 +5,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.job4j.ood.lcp.foodkeper.food.Bread;
 import ru.job4j.ood.lcp.foodkeper.food.Food;
+import ru.job4j.ood.lcp.foodkeper.store.ShopDataProvider;
 
 import java.util.stream.Stream;
 
@@ -43,18 +44,19 @@ class OverallStrategyTest {
                 toCalendar(getReferenceDate().plusDays(20))
         );
 
+        ShopDataProvider shopDataProvider = new ShopDataProvider();
         return Stream.of(
-                Arguments.of(new WareHouseStrategy(), food1, false),
-                Arguments.of(new ShopStrategy(), food1, true),
-                Arguments.of(new TrashStrategy(), food1, false),
+                Arguments.of(new WareHouseStrategy(shopDataProvider), food1, false),
+                Arguments.of(new ShopStrategy(shopDataProvider), food1, true),
+                Arguments.of(new TrashStrategy(shopDataProvider), food1, false),
 
-                Arguments.of(new WareHouseStrategy(), food2, false),
-                Arguments.of(new ShopStrategy(), food2, false),
-                Arguments.of(new TrashStrategy(), food2, true),
+                Arguments.of(new WareHouseStrategy(shopDataProvider), food2, false),
+                Arguments.of(new ShopStrategy(shopDataProvider), food2, false),
+                Arguments.of(new TrashStrategy(shopDataProvider), food2, true),
 
-                Arguments.of(new WareHouseStrategy(), food3, false),
-                Arguments.of(new ShopStrategy(), food3, true),
-                Arguments.of(new TrashStrategy(), food3, false)
+                Arguments.of(new WareHouseStrategy(shopDataProvider), food3, false),
+                Arguments.of(new ShopStrategy(shopDataProvider), food3, true),
+                Arguments.of(new TrashStrategy(shopDataProvider), food3, false)
         );
     }
 }

@@ -26,13 +26,12 @@ public final class ExpirationCalculator {
     private ExpirationCalculator() {
     }
 
-    public static double countExpiration(Food food) {
+    public static double countExpiration(Food food, LocalDate now) {
         GregorianCalendar createDate = food.getCreateDate();
         GregorianCalendar expiryDate = food.getExpiryDate();
         LocalDate created = createDate.toZonedDateTime().toLocalDate();
         LocalDate expired = expiryDate.toZonedDateTime().toLocalDate();
         long totalShelfLife  = ChronoUnit.DAYS.between(created, expired);
-        LocalDate now = LocalDate.now();
         long daysWasted = ChronoUnit.DAYS.between(created, now);
         if (totalShelfLife  <= 0) {
             return FOOD_MAX_EXPIRATION;

@@ -4,7 +4,7 @@ import ru.job4j.ood.lcp.foodkeper.food.Food;
 
 import java.util.List;
 
-public interface Store {
+public interface Store extends Clean {
     Food add(Food food);
 
     void delete(int id);
