@@ -5,6 +5,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.job4j.ood.lcp.foodkeper.food.Bread;
 import ru.job4j.ood.lcp.foodkeper.food.Food;
+import ru.job4j.ood.lcp.foodkeper.store.DataProvider;
 import ru.job4j.ood.lcp.foodkeper.store.ShopDataProvider;
 
 import java.util.stream.Stream;
@@ -39,11 +40,11 @@ class ShopDiscounterTest {
                 toCalendar(getReferenceDate().plusDays(10))
         );
 
-        ShopDataProvider shopDataProvider = new ShopDataProvider();
+        DataProvider fixedDataProvider = () -> getReferenceDate();
 
         return Stream.of(
-                Arguments.of(new ShopDiscounter(shopDataProvider), food1, 50),
-                Arguments.of(new ShopDiscounter(shopDataProvider), food2, 40)
+                Arguments.of(new ShopDiscounter(fixedDataProvider), food1, 50),
+                Arguments.of(new ShopDiscounter(fixedDataProvider), food2, 40)
         );
     }
 }
