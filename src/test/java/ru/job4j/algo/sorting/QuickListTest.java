@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class QuickListTest {
     @Test
     void whenSortThenOk() {
+
         User user1 = new User(1, "11");
         User user2 = new User(1, "22");
         User user3 = new User(3, "33");
