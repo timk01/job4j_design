@@ -2,6 +2,7 @@ package ru.job4j.newcoll.tree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
@@ -16,7 +17,7 @@ public class TreeUtils<T> {
      */
     public int countNode(Node<T> root) {
         AtomicInteger counter = new AtomicInteger();
-        bfs(root, node -> counter.getAndIncrement(), "count");
+        bfs(root, node -> counter.getAndIncrement());
 
         return counter.get();
     }
@@ -30,7 +31,7 @@ public class TreeUtils<T> {
      */
     public Iterable<T> findAll(Node<T> root) {
         List<T> nodes = new ArrayList<>();
-        bfs(root, node -> nodes.add(node.getValue()), "find");
+        bfs(root, node -> nodes.add(node.getValue()));
 
         return nodes;
     }
@@ -46,13 +47,10 @@ public class TreeUtils<T> {
      *
      * @param root
      * @param action
-     * @param msg
      */
 
-    private void bfs(Node<T> root, Consumer<Node<T>> action, String msg) {
-        if (root == null) {
-            throw new IllegalArgumentException("cannot " + msg + " Nodes if root is null");
-        }
+    private void bfs(Node<T> root, Consumer<Node<T>> action) {
+        checkRoot(root);
 
         SimpleQueue<Node<T>> queue = new SimpleQueue<>();
         queue.push(root);
@@ -64,6 +62,112 @@ public class TreeUtils<T> {
             for (Node<T> child : children) {
                 queue.push(child);
             }
+        }
+    }
+
+    /**
+     * add, findByKey, divideByKey - это уже поиск в глубину!
+     * <p>
+     * Метод обходит дерево root и добавляет к узлу с ключом parent
+     * новый узел с ключом child, при этом на момент добавления узел с ключом parent
+     * уже должен существовать в дереве, а узла с ключом child в дереве быть не должно
+     *
+     * @param root   корень дерева
+     * @param parent ключ узла-родителя
+     * @param child  ключ узла-потомка
+     * @return true если добавление произошло успешно и false в обратном случае.
+     * @throws IllegalArgumentException если root является null
+     */
+    public boolean add(Node<T> root, T parent, T child) {
+        checkRoot(root);
+
+        Optional<Node<T>> parentResult = findByKey(root, parent);
+        Optional<Node<T>> childResult = findByKey(root, child);
+
+        if (parentResult.isEmpty() || childResult.isPresent()) {
+            return false;
+        }
+
+        return parentResult.get().getChildren().add(new Node<>(child));
+    }
+
+    /**
+     * Метод обходит дерево root и возвращает первый найденный узел с ключом key
+     *
+     * @param root корень дерева
+     * @param key  ключ поиска
+     * @return узел с ключом key, завернутый в объект типа Optional
+     * @throws IllegalArgumentException если root является null
+     */
+    public Optional<Node<T>> findByKey(Node<T> root, T key) {
+        checkRoot(root);
+
+        SimpleStack<Node<T>> stack = new SimpleStack<>();
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            Node<T> poppedEl = stack.pop();
+            if (poppedEl.getValue().equals(key)) {
+                return Optional.of(poppedEl);
+            }
+
+            for (Node<T> child : poppedEl.getChildren()) {
+                if (child.getValue().equals(key)) {
+                    return Optional.of(child);
+                }
+            }
+
+        }
+
+        return Optional.empty();
+    }
+
+    /**
+     * Метод обходит дерево root и возвращает первый найденный узел с ключом key,
+     * при этом из дерева root удаляется все поддерево найденного узла
+     *
+     * @param root корень дерева
+     * @param key  ключ поиска
+     * @return узел с ключом key, завернутый в объект типа Optional
+     * @throws IllegalArgumentException если root является null
+     */
+    public Optional<Node<T>> divideByKey(Node<T> root, T key) {
+        checkRoot(root);
+
+        Optional<Node<T>> foundNode = findByKey(root, key);
+
+        if (foundNode.isEmpty()) {
+            return Optional.empty();
+        }
+
+        if (foundNode.get().equals(root)) {
+            return Optional.of(root);
+        }
+
+        SimpleStack<Node<T>> stack = new SimpleStack<>();
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            Node<T> poppedEl = stack.pop();
+            List<Node<T>> children = poppedEl.getChildren();
+
+            for (int i = 0; i < children.size(); i++) {
+                if (children.get(i).equals(foundNode.get())) {
+                    children.remove(i);
+                    return foundNode;
+                }
+                stack.push(children.get(i));
+            }
+        }
+
+        throw new IllegalStateException(
+                "Node was found and is not the root, but its parent was not found in the tree"
+        );
+    }
+
+    private <T> void checkRoot(Node<T> root) {
+        if (root == null) {
+            throw new IllegalArgumentException("root is null");
         }
     }
 }
