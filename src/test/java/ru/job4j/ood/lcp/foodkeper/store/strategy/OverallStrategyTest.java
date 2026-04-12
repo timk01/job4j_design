@@ -5,7 +5,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.job4j.ood.lcp.foodkeper.food.Bread;
 import ru.job4j.ood.lcp.foodkeper.food.Food;
-import ru.job4j.ood.lcp.foodkeper.store.ShopDataProvider;
+import ru.job4j.ood.lcp.foodkeper.store.DataProvider;
+import ru.job4j.ood.lcp.foodkeper.store.FixedDateProvider;
 
 import java.util.stream.Stream;
 
@@ -44,7 +45,7 @@ class OverallStrategyTest {
                 toCalendar(getReferenceDate().plusDays(20))
         );
 
-        ShopDataProvider shopDataProvider = new ShopDataProvider();
+        DataProvider shopDataProvider = new FixedDateProvider(getReferenceDate());
         return Stream.of(
                 Arguments.of(new WareHouseStrategy(shopDataProvider), food1, false),
                 Arguments.of(new ShopStrategy(shopDataProvider), food1, true),

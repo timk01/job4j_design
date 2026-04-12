@@ -26,7 +26,7 @@ class NonGetDemo {
 
         System.out.println(iOb.getClass().getName());
         System.out.println(iOb.ob.getClass().getName());
-        Object obj = new Integer(1);
+        Object obj = Integer.valueOf(1);
 
         iOb.showType();
 
