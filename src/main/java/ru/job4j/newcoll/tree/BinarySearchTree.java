@@ -167,7 +167,6 @@ public class BinarySearchTree<T extends Comparable<T>> {
     }
 
     public boolean remove(T key) {
-        /* Метод будет реализован в следующих уроках */
         return false;
     }
 
@@ -176,6 +175,29 @@ public class BinarySearchTree<T extends Comparable<T>> {
         Node node = root;
         return inSymmetricalOrder(node, result);
     }
+
+    /**
+     * обработай левое поддерево;
+     * добавь сам узел;
+     * обработай правое поддерево.
+     * <p>
+     * на примере симметричного "правильного" дерева. 1 - 2 (левый 1 уровня) - 3 - 4 (рут) - 5 - 6 - 7
+     * работет так: провалились внутрь до рута = 1. inSymmetricalOrder(localRoot.left, list);
+     * inSymmetricalOrder(1, list) - вызвали, у него что localRoot.лефт, что райт = null.
+     * провалились в inSymmetricalOrder(null, list) - вернули лист (пустой).
+     * вернулись к 1. добавили узел: inSymmetricalOrder(1, list)
+     * посмотрели правый - он тоже null. вернули целый лист (он null)
+     * заакончили обработку inSymmetricalOrder(1, list) с inSymmetricalOrder(1, list)
+     * вернулись к 2. добавили 2 в лист.
+     * посмотрели тройку... также: посмотрели лефт от 3. он пустой, вернули пустой лист, добавили тройку,
+     * посмотрели рйт от 3, он тоже пустой, ничего не добавили... вернули 1, 2, 3
+     * вернулись к руту. лево - обработано, значит доабвили в лист и 4.
+     * занимаемся правой частью...
+     *
+     * @param localRoot
+     * @param list
+     * @return
+     */
 
     private List<T> inSymmetricalOrder(Node localRoot, List<T> list) {
         if (localRoot != null) {
@@ -186,33 +208,87 @@ public class BinarySearchTree<T extends Comparable<T>> {
         return list;
     }
 
+    /**
+     * preorder = сначала узел
+     * потом все слева
+     * потом все справа
+     * <p>
+     * порядок с 1 - 2 (левый 1 уровня) - 3 - 4 (рут) - 5 - 6 - 7
+     * <p>
+     * добавил корень (4), обработал левую часть рекурсивно: добавил 2, обработал ее рекурсивно - добвил 1,
+     * обработал и ее. у нее что слева нулль, что справа - вернул лист.
+     * вернулся в 2. добавил 3 (в этот момент в листе 4, 2, 1, 3) обрбаотал правую часть - это 3.
+     * там тоже слева - нулль, српава - нулль, вернул лист пустой
+     * вернулся в 2. 2 - закончил обрбаотку, вернул лист выше.
+     * 4 - соответственно ПОЛНОСТЬЮ прошел левую часть, настала время правой
+     * inPreOrder(localRoot.right, list); - будет двигаться начиная с 6
+     *
+     * @return
+     */
     public List<T> inPreOrder() {
-        //TODO реализуйте метод
-        return null;
+        List<T> result = new ArrayList<>();
+        Node node = root;
+        return inPreOrder(node, result);
     }
 
     private List<T> inPreOrder(Node localRoot, List<T> list) {
-        //TODO реализуйте метод
-        return null;
+        if (localRoot != null) {
+            list.add(localRoot.key);
+            inPreOrder(localRoot.left, list);
+            inPreOrder(localRoot.right, list);
+        }
+
+        return list;
     }
 
+    /**
+     * порядок с 1 - 2 (левый 1 уровня) - 3 - 4 (рут) - 5 - 6 - 7
+     * <p>
+     * дошел до левого конца - посмотрел - там нули, после того как встретил правый нулль - добавил 1,
+     * вернул список из 1
+     * дошел до следующего конца текущего узла (т.е. правый конец), проверил что там нули, добавил в конце в список
+     * в списке 1, 3 - вернулся к 2, добавил и 2 (1, 3, 2)
+     * дальше. вернулся к 4. там - еще не обработали право. берем 6. там начинаем с левой части
+     * т.е. с inPostOrder(localRoot.left, list) - обработали ее, добвили,
+     * смотрим праввую часть 6 - обработали ее, вернулись к 6. добавили и 6
+     * вернусь к 4, добавили... [1, 3, 2, 5, 7, 6, 4]
+     *
+     * @return
+     */
+
     public List<T> inPostOrder() {
-        //TODO реализуйте метод
-        return null;
+        List<T> result = new ArrayList<>();
+        Node node = root;
+        return inPostOrder(node, result);
     }
 
     private List<T> inPostOrder(Node localRoot, List<T> list) {
-        //TODO реализуйте метод
-        return null;
+        if (localRoot != null) {
+            inPostOrder(localRoot.left, list);
+            inPostOrder(localRoot.right, list);
+            list.add(localRoot.key);
+        }
+
+        return list;
     }
+
+    /**
+     * смысл в том, что мы спусаемся только по левой ветке постоянно, до тех пор пока она не нулль, т.к. в этом случае
+     * нам надо брать предыдущую ноду. например 1 - у нее лефт = 0, значит нам надо будет сразу возвращать 1 наверх
+     * (право - неважно, т.к. левая нода - от нее левое значение - всегда минимальное)
+     *
+     * @return
+     */
 
     public T minimum() {
         return Objects.nonNull(root) ? minimum(root).key : null;
     }
 
     private Node minimum(Node node) {
-        //TODO реализуйте метод
-        return null;
+        if (node != null && node.left != null) {
+            return minimum(node.left);
+        }
+        return node;
     }
 
     public T maximum() {
@@ -220,8 +296,10 @@ public class BinarySearchTree<T extends Comparable<T>> {
     }
 
     private Node maximum(Node node) {
-        //TODO реализуйте метод
-        return null;
+        if (node != null && node.right != null) {
+            return maximum(node.right);
+        }
+        return node;
     }
 
     @Override
@@ -252,18 +330,5 @@ public class BinarySearchTree<T extends Comparable<T>> {
         public String getText() {
             return key.toString();
         }
-    }
-
-    public static void main(String[] args) {
-        BinarySearchTree<Integer> binarySearchTree = new BinarySearchTree<>();
-        binarySearchTree.put(2);
-        binarySearchTree.put(1);
-        binarySearchTree.put(3);
-        binarySearchTree.put(0);
-
-        binarySearchTree.contains(0);
-        binarySearchTree.contains(5);
-
-        System.out.println(binarySearchTree);
     }
 }
