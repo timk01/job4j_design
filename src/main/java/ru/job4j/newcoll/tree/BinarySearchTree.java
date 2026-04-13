@@ -167,7 +167,98 @@ public class BinarySearchTree<T extends Comparable<T>> {
     }
 
     public boolean remove(T key) {
-        return false;
+        boolean result = false;
+        if (Objects.nonNull(key) && Objects.nonNull(root)) {
+            result = remove(root, key);
+        }
+        return result;
+    }
+
+    /**
+     * сначала как обычно ищем ту ноду (узел), что нужно удалить.
+     * result && !Objects.equals(current.key, key) - обрати внимание что оба условия должны быть верны
+     * резалт будет фолс только если не нашли ноду.
+     * а !Objects.equals(current.key, key) - се выражение будет фолс, только когда ноду нашли.
+     * внутри - просто сравнение ноды текущй с корнем, пока не найдем нужную (см. выше)
+     * <p>
+     * как нашли (если нашли), задача распадается на несколько вариантов:
+     * (в 1, 2 (А, Б) вызывается метод swap, в В тяжелее. метод свап просто переставляет ссылки родителя)
+     * 1. голый корень, без детей. просто обнулить
+     * <p>
+     * 2. узел с 0 / 1 / 2 детьми - смотреть на наследников.
+     * А) слева 1 наследник, справа нет - переставить ссылки (1 - 2 - 3, вырезаем 2 - переставляем 1 на его место)
+     * Б) српава 1 наследник
+     * В) самое сложное. у ноды есть 2 наследника (а у тех могут быть еще анследники).
+     * -  лоб не удается, как решение берем у удаляемой ноды правый, у него (первого правого) самый левый
+     * хитро перставляем, чтобы было по-прежнему 2 или менее анследников и сохранялись иерархия слева меньше корня,
+     * справа больше (и по элементам - то же).
+     *
+     * @param source
+     * @param key
+     * @return
+     */
+    private boolean remove(Node source, T key) {
+        boolean result = true;
+        Node current = source;
+        Node parent = source;
+        boolean isLeft = true;
+        while (result && !Objects.equals(current.key, key)) {
+            parent = current;
+            int cmp = key.compareTo(current.key);
+            if (cmp < 0) {
+                isLeft = true;
+                current = current.left;
+            } else if (cmp > 0) {
+                isLeft = false;
+                current = current.right;
+            }
+            if (Objects.isNull(current)) {
+                result = false;
+            }
+        }
+        if (result) {
+            if (Objects.isNull(current.left) && Objects.isNull(current.right)) {
+                swap(isLeft, source, parent, current, null);
+            } else if (Objects.nonNull(current.left) && Objects.isNull(current.right)) {
+                swap(isLeft, source, parent, current, current.left);
+            } else if (Objects.isNull(current.left)) {
+                swap(isLeft, source, parent, current, current.right);
+            } else {
+                Node heir = getHeir(current);
+                swap(isLeft, source, parent, current, heir);
+                heir.left = current.left;
+                current.left = null;
+                current.right = null;
+            }
+            current.key = null;
+        }
+        return result;
+    }
+
+    private void swap(boolean isLeft, Node source, Node parent, Node current, Node equal) {
+        if (Objects.equals(current, source)) {
+            root = equal;
+        } else if (isLeft) {
+            parent.left = equal;
+        } else {
+            parent.right = equal;
+        }
+    }
+
+    private Node getHeir(Node delNode) {
+        Node nodeParent = delNode;
+        Node node = delNode;
+        Node current = delNode.right;
+        while (current != null) {
+            nodeParent = node;
+            node = current;
+            current = current.left;
+        }
+        if (node != delNode.right) {
+            nodeParent.left = node.right;
+            node.right = delNode.right;
+        }
+        return node;
     }
 
     public List<T> inSymmetricalOrder() {
