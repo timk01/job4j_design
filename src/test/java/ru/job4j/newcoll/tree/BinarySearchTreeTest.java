@@ -105,8 +105,8 @@ class BinarySearchTreeTest {
     }
 
     @ParameterizedTest
-    @MethodSource("treeRemovalBasicCases")
-    void whenRemoveCommonCases(Integer key, boolean expectedResult, List<Integer> expectedOrder) {
+    @MethodSource("treeRemovalNodeBasicCases")
+    void whenRemoveNodeCommonCases(Integer key, boolean expectedResult, List<Integer> expectedOrder) {
         BinarySearchTree<Integer> tree = new BinarySearchTree<>();
         for (int element : new int[]{4, 2, 6, 3, 5, 7, 1, 0, 8}) {
             tree.put(element);
@@ -120,7 +120,7 @@ class BinarySearchTreeTest {
         }
     }
 
-    static Stream<Arguments> treeRemovalBasicCases() {
+    static Stream<Arguments> treeRemovalNodeBasicCases() {
         return Stream.of(
                 Arguments.of(10, false, List.of(0, 1, 2, 3, 4, 5, 6, 7, 8)),
                 Arguments.of(0, true, List.of(1, 2, 3, 4, 5, 6, 7, 8)),
@@ -156,5 +156,45 @@ class BinarySearchTreeTest {
         assertThat(tree.remove(4)).isTrue();
         assertThat(tree.contains(4)).isFalse();
         assertThat(tree.inSymmetricalOrder()).isEqualTo(List.of(0, 1, 2, 3, 5, 6, 7, 8));
+    }
+
+    @ParameterizedTest
+    @MethodSource("treeClearTreeBasicCases")
+    void whenClearTreeCommonCases(List<Integer> in, List<Integer> result) {
+        BinarySearchTree<Integer> tree = new BinarySearchTree<>();
+        for (int element : in) {
+            tree.put(element);
+        }
+
+        tree.clear();
+        assertThat(tree.inSymmetricalOrder()).isEqualTo(result);
+        assertThat(tree.maximum()).isNull();
+        assertThat(tree.minimum()).isNull();
+    }
+
+    static Stream<Arguments> treeClearTreeBasicCases() {
+        List<Integer> emptyList = List.of();
+        return Stream.of(
+                Arguments.of(List.of(4, 2, 6, 3, 5, 7, 1, 0, 8), emptyList),
+                Arguments.of(List.of(2, 6, 3, 5, 7, 1, 0, 8), emptyList),
+                Arguments.of(List.of(4, 2, 6, 3, 5, 7, 1, 0), emptyList),
+                Arguments.of(List.of(2, 6, 3, 5, 7, 1, 0), emptyList),
+                Arguments.of(List.of(1, 2, 3), emptyList),
+                Arguments.of(List.of(1, 2), emptyList),
+                Arguments.of(List.of(2, 3), emptyList)
+        );
+    }
+
+    @Test
+    void whenRootIsSoloThenClearContainsNothing() {
+        BinarySearchTree<Integer> tree = new BinarySearchTree<>();
+        for (int element : new int[]{4}) {
+            tree.put(element);
+        }
+        tree.clear();
+        List<Integer> result = List.of();
+        assertThat(tree.inSymmetricalOrder()).isEqualTo(result);
+        assertThat(tree.maximum()).isNull();
+        assertThat(tree.minimum()).isNull();
     }
 }
