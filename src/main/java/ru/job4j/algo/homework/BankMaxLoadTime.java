@@ -55,7 +55,6 @@ public class BankMaxLoadTime {
         int maxClientsQuantity = 0;
         int maxLoadStartTime = 0;
         int maxLoadEndTime = 0;
-
         for (int i = 0; i < events.size() - 1; i++) {
             if (events.get(i).type == ARRIVAL) {
                 currentClientsQuantity++;
